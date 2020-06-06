@@ -1,0 +1,7 @@
+.vscode
+node_modules
+erb
+next.config.js
+
+_app.tsx
+_document.tsx
