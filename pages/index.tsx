@@ -1,5 +1,11 @@
-import Head from 'next/head'
+import React from 'react'
 
-export default () => {
-  return <></>
+const Index: React.FC = () => {
+  return (
+    <>
+      <h1>test</h1>
+    </>
+  )
 }
+
+export default Index

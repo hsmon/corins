@@ -7,16 +7,17 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint --ext .ts,.tsx --ignore-path .gitignore . --fix"
+    "lint": "eslint --ext .ts,.tsx --ignore-path .eslintignore . --fix"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "pretty-quick --staged",
       "pre-push": "yarn lint"
     }
   },
   "dependencies": {
+    "@zeit/next-sass": "^1.0.1",
     "next": "9.4.4",
+    "node-sass": "^4.14.1",
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "smarthr-ui": "^8.4.0",

@@ -23,6 +23,13 @@ module.exports = {
   rules: {
     'react/react-in-jsx-scope': 'off',
     'no-extra-semi': 'warn',
+    'react/prop-types': [2, { ignore: ['children'] }],
+    '@typescript-eslint/explicit-function-return-type': [
+      'error',
+      {
+        allowExpressions: true,
+      },
+    ],
   },
   globals: {
     React: 'writable',

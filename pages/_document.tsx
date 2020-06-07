@@ -6,7 +6,7 @@ type Props = {
 }
 
 export default class MyDocument extends Document<Props> {
-  static getInitialProps ({ renderPage }) {
+  static getInitialProps ({ renderPage }: any) {
     const sheet = new ServerStyleSheet()
 
     const page = renderPage((App: any) => (props: any) => sheet.collectStyles(<App {...props} />))
@@ -24,6 +24,10 @@ export default class MyDocument extends Document<Props> {
           <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
           <meta name="viewport" content="width=device-width,initial-scale=1" />
           <link rel="icon" href="/favicon.ico" />
+          <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css?family=Noto+Sans+JP:400,900|Raleway:400,900&amp;display=swap"
+          />
           {this.props.styleTags}
         </Head>
         <body>
