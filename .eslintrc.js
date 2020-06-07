@@ -42,7 +42,8 @@ module.exports = {
           requireLast: false
         }
       }
-    ]
+    ],
+    'space-before-function-paren': 0
   },
   globals: {
     React: 'writable'
