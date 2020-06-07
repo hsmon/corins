@@ -1,23 +1,23 @@
 module.exports = {
   env: {
     browser: true,
-    es2020: true,
+    es2020: true
   },
   extends: [
     'standard',
     'eslint:recommended',
     'plugin:react/recommended',
     'plugin:@typescript-eslint/eslint-recommended',
-    'plugin:@typescript-eslint/recommended',
+    'plugin:@typescript-eslint/recommended'
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
     project: './tsconfig.json',
     ecmaFeatures: {
-      jsx: true,
+      jsx: true
     },
     ecmaVersion: 11,
-    sourceType: 'module',
+    sourceType: 'module'
   },
   plugins: ['react', '@typescript-eslint'],
   rules: {
@@ -27,16 +27,29 @@ module.exports = {
     '@typescript-eslint/explicit-function-return-type': [
       'error',
       {
-        allowExpressions: true,
-      },
+        allowExpressions: true
+      }
     ],
+    '@typescript-eslint/member-delimiter-style': [
+      'error',
+      {
+        multiline: {
+          delimiter: 'none',
+          requireLast: false
+        },
+        singleline: {
+          delimiter: 'comma',
+          requireLast: false
+        }
+      }
+    ]
   },
   globals: {
-    React: 'writable',
+    React: 'writable'
   },
   settings: {
     react: {
-      version: 'detect',
-    },
-  },
+      version: 'detect'
+    }
+  }
 }
