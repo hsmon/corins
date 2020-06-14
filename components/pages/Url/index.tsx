@@ -3,15 +3,15 @@ import styled from 'styled-components'
 import { Input } from 'smarthr-ui'
 import PropTypes from 'prop-types'
 import { useDispatch } from 'react-redux'
-import { addUrlStateValue } from '~/redux/addUrl/actions'
-import { AddUrlProps } from '~/redux/addUrl/reducer'
+import { addUrlStateValue } from '~/redux/urls/actions'
+import { AddUrlProps } from '~/redux/urls/reducer'
 
 interface Props {
   className?: string
 }
 
 const View: React.FC<Props> = (props) => {
-  const [url, setUrl] = React.useState('')
+  const [src, setUrl] = React.useState('')
   const dispatch = useDispatch()
 
   const handleChange: ({
@@ -29,21 +29,18 @@ const View: React.FC<Props> = (props) => {
 
   const handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void = (e) => {
     e.preventDefault()
-    const urlStatus: AddUrlProps = { url }
-    // urlを送信
+    const urlStatus: AddUrlProps = { src }
     dispatch(addUrlStateValue(urlStatus))
   }
-
-  // TODO バリデーションチェック
 
   return (
     <form className={props.className} method="post" onSubmit={handleSubmit}>
       <Input
         type="url"
         name="url"
-        value={url}
+        value={src}
         onChange={handleChange}
-        error={false}
+        autoFocus={true}
       />
       <input type="submit" value="このURLで指示する" />
     </form>

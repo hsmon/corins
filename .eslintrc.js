@@ -43,7 +43,8 @@ module.exports = {
         }
       }
     ],
-    'space-before-function-paren': 0
+    'space-before-function-paren': 0,
+    indent: [0, 'tab']
   },
   globals: {
     React: 'writable'

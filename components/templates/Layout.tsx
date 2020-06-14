@@ -6,11 +6,11 @@ interface Props {
   className?: string
 }
 
-const View: React.FC<Props> = ({ ...props }) => {
+const View: React.FC<Props> = ({ className, children }) => {
   return (
     <>
-      <Header />
-      <div className={props.className}>{props.children}</div>
+      <Header idName="header" />
+      <div className={className}>{children}</div>
     </>
   )
 }

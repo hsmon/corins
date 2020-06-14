@@ -1,11 +1,11 @@
 import { combineReducers } from 'redux'
-import addUrlReducer from './addUrl/reducer'
-import { AddUrlStateType } from './addUrl/actions'
+import urlReducer from './urls/reducer'
+import { UrlStateType } from './urls/actions'
 
-export type allActionTypes = AddUrlStateType
+export type allActionTypes = UrlStateType
 
 const rootReducer = combineReducers({
-  addUrl: addUrlReducer
+  url: urlReducer
 })
 
 export type StoreState = ReturnType<typeof rootReducer>
