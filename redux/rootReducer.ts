@@ -11,7 +11,5 @@ const rootReducer = combineReducers({
   pin: pinReducer
 })
 
-export type StoreState =
-  | ReturnType<typeof rootReducer>
-  | ReturnType<typeof pinReducer>
+export type StoreState = ReturnType<typeof rootReducer>
 export default rootReducer

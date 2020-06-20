@@ -19,16 +19,16 @@ export type AddUrlImageProps = {
   imageHeight: number
 }
 
-export type allUrlProps = AddUrlProps | RemoveUrlProps | AddUrlImageProps
+export type AllUrlProps = AddUrlProps | RemoveUrlProps | AddUrlImageProps
 
-const init: allUrlProps = {
+const init: AllUrlProps = {
   src: ''
 }
 
 export default function urlReducer(
-  state: allUrlProps = init,
+  state: AllUrlProps = init,
   action: UrlStateType
-): allUrlProps {
+): AllUrlProps {
   const { type, payload } = action
 
   switch (type) {

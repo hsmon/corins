@@ -134,7 +134,7 @@ const View: React.FC<Props> = ({
   const handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void = (e) => {
     e.preventDefault()
     if (checkAllText()) {
-      dispatch(addPinStateValue(pinArray))
+      dispatch(addPinStateValue({ pins: pinArray }))
       dispatch(
         addUrlImage({
           imagePath: screenshot,

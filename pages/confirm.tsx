@@ -5,6 +5,8 @@ import { useSelector } from 'react-redux'
 import { usePreventWindowUnload } from '~/hooks/usePreventWindowUnload'
 import { useRouter } from 'next/router'
 import Retry from '~/components/organisms/Retry'
+import { AddUrlImageProps } from '~/redux/urls/reducer'
+import { PinProps } from '~/redux/pins/reducer'
 
 // ===============================
 // @Types
@@ -12,11 +14,20 @@ import Retry from '~/components/organisms/Retry'
 interface Props {
   className?: string
 }
+type IndexTypes = {
+  url: AddUrlImageProps
+  pin: {
+    pins: PinProps[]
+  }
+}
 
 // ===============================
 // @Component
 // ===============================
-const urlSelector = ({
+const urlSelector: ({
+  url: { imagePath, imageWidth, imageHeight },
+  pin: { pins }
+}: IndexTypes) => AddUrlImageProps & { pins: PinProps[] } = ({
   url: { imagePath, imageWidth, imageHeight },
   pin: { pins }
 }) => ({
@@ -69,8 +80,12 @@ const View: React.FC<Props> = ({ className }) => {
               }}
             >
               <ol>
-                {pins.map((item, index) => {
-                  const [x, y, text] = [item.x, item.y, item.text]
+                {pins.map((item: PinProps, index: number) => {
+                  const [x, y, text] = [
+                    item?.x ?? 0,
+                    item?.y ?? 0,
+                    item?.text ?? ''
+                  ]
                   return (
                     <li
                       id={`${index}_${x}_${y}`}
@@ -90,8 +105,12 @@ const View: React.FC<Props> = ({ className }) => {
           </div>
           <div className="confirm__desc">
             <ol>
-              {pins.map((item, index) => {
-                const [x, y, text] = [item.x, item.y, item.text]
+              {pins.map((item: PinProps, index: number) => {
+                const [x, y, text] = [
+                  item?.x ?? 0,
+                  item?.y ?? 0,
+                  item?.text ?? ''
+                ]
                 return (
                   <li key={x * y}>
                     <a
