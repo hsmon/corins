@@ -50,6 +50,10 @@ const View: React.FC<Props> = ({ className }) => {
     []
   )
 
+  const toRedo: () => void = () => {
+    router.push('/redo')
+  }
+
   usePreventWindowUnload(true)
 
   React.useEffect(() => {
@@ -125,7 +129,9 @@ const View: React.FC<Props> = ({ className }) => {
           </div>
           <div className="confirm__button-list">
             <button className="confirm__button--confirm">修正指示を確定</button>
-            <button className="confirm__button--redo">やりなおす</button>
+            <button className="confirm__button--redo" onClick={toRedo}>
+              やりなおす
+            </button>
           </div>
         </>
       ) : (
@@ -217,9 +223,17 @@ export default styled(View)`
       &--confirm {
         background: ${({ theme }) => theme.colors.green};
         color: #fff;
+        transition: 0.3s;
+        &:hover {
+          background: ${({ theme }) => theme.colors.blue4};
+        }
       }
       &--redo {
         background: ${({ theme }) => theme.colors.whitesmoke};
+        transition: 0.3s;
+        &:hover {
+          background: ${({ theme }) => theme.colors.silver};
+        }
       }
     }
   }

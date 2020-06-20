@@ -20,6 +20,7 @@ interface Props {
   screenshot: string
   screenshotWidth: number
   screenshotHeight: number
+  pins?: PinProps[]
 }
 
 // ===============================
@@ -29,10 +30,11 @@ const View: React.FC<Props> = ({
   className,
   screenshot,
   screenshotWidth,
-  screenshotHeight
+  screenshotHeight,
+  pins
 }) => {
   const [pinState, setPinState] = React.useState<PinProps>(null)
-  const [pinArray, setPinArray] = React.useState<PinProps[]>([])
+  const [pinArray, setPinArray] = React.useState<PinProps[]>(pins ?? [])
   const [isOpen, setIsOpen] = React.useState<boolean>(true)
   const [isDialogOpen, setIsDialogOpen] = React.useState<boolean>(false)
   const onClickOpen: () => void | React.Dispatch<
@@ -268,7 +270,8 @@ View.propTypes = {
   className: PropTypes.string.isRequired,
   screenshot: PropTypes.string.isRequired,
   screenshotWidth: PropTypes.number.isRequired,
-  screenshotHeight: PropTypes.number.isRequired
+  screenshotHeight: PropTypes.number.isRequired,
+  pins: PropTypes.array.isRequired
 }
 
 // ===============================
@@ -549,7 +552,7 @@ export default styled(View)`
     cursor: pointer;
     border-radius: 6px;
     padding: 0.5rem;
-    transition: 0.5s;
+    transition: 0.3s;
     max-width: 700px;
     width: 100%;
     margin: 2em auto 0;
