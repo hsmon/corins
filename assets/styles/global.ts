@@ -26,9 +26,13 @@ const globalStyle = createGlobalStyle<{ theme: ThemeType }>`
     font: inherit;
     vertical-align: baseline;
     -webkit-tap-highlight-color:rgba(0,0,0,0);
+    word-break: break-all;
   }
   html, body {
     height: 100%;
+  }
+  html {
+    scroll-behavior: smooth;
   }
   body {
     background: ${({ theme }) => theme.colors.background};

@@ -2,12 +2,14 @@ import React from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 import { GetServerSideProps } from 'next'
-import Link from 'next/link'
 
 import getScreenshot, {
   ScreenshotAllType,
   ScreenshotType
 } from '~/pages/api/screenshot'
+
+import Retry from '~/components/organisms/Retry'
+import Edit from '~/components/pages/Edit'
 
 // ===============================
 // @Types
@@ -25,46 +27,27 @@ interface Props {
 // @Component
 // ===============================
 
-const Retry: React.FC = () => {
-  return (
-    <>
-      <p>もう一度はじめからやり直してください</p>
-      <Link href="/">
-        <a>やりなおす</a>
-      </Link>
-    </>
-  )
-}
+// const pinsSelector = ({ pin: { pins } }) => pins
 
 const View: React.FC<Props> = ({
   className,
-  src,
   screenshot,
   screenshotWidth,
   screenshotHeight,
   error
 }) => {
   if (error) return <Retry />
+
   // TODO 戻るボタンを押したときに、redux-urlをリセット
 
   return (
     <div className={className}>
       <h1>修正指示を編集しましょう ✍️</h1>
-      <div id="edit">
-        {screenshot ? (
-          <div
-            style={{
-              background: `url(data:image/png;base64,${screenshot})`,
-              backgroundSize: 'cover',
-              width: '100%',
-              height: 0,
-              paddingTop: `${(screenshotHeight / screenshotWidth) * 100}%`
-            }}
-          />
-        ) : (
-          <Retry />
-        )}
-      </div>
+      <Edit
+        screenshot={screenshot}
+        screenshotWidth={screenshotWidth}
+        screenshotHeight={screenshotHeight}
+      />
     </div>
   )
 }
@@ -78,9 +61,9 @@ View.propTypes = {
   error: PropTypes?.string.isRequired
 }
 
-export const getServerSideProps:
-  | GetServerSideProps
-  | ScreenshotAllType = async ({ query: { src, error } }) => {
+export const getServerSideProps: GetServerSideProps<ScreenshotAllType> = async ({
+  query: { src, error }
+}) => {
   if (error || !src) {
     return {
       props: {
@@ -93,11 +76,10 @@ export const getServerSideProps:
     screenshot,
     screenshotWidth,
     screenshotHeight
-  }: ScreenshotType = await getScreenshot(src)
+  } = (await getScreenshot(src as string)) as ScreenshotType
 
   return {
     props: {
-      src,
       screenshot,
       screenshotWidth,
       screenshotHeight

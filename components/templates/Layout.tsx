@@ -23,6 +23,7 @@ export default styled(View)`
   max-width: ${({ theme }) => theme.sizes.maxWidth};
   position: relative;
   margin: 0 auto;
+  min-width: 1200px;
   padding: 5em ${({ theme }) => theme.sideSpace.large};
   @media screen and (max-width: ${({ theme }) => theme.responsive.large}) {
     max-width: 760px;

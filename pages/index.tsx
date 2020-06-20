@@ -36,11 +36,14 @@ const View: React.FC<Props> = ({ className }) => {
     })
   }
 
+  React.useEffect(() => {
+    if (urlStatus) linkTransition()
+  }, [urlStatus])
+
   return (
     <div className={className}>
       <h1>修正指示を出したいページのURLを教えて下さい ✏️</h1>
       <UrlForm />
-      {urlStatus && linkTransition()}
     </div>
   )
 }
