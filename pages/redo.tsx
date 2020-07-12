@@ -15,7 +15,12 @@ interface Props {
 }
 
 type IndexTypes = {
-  url: AddUrlImageProps
+  url: {
+    imagePath: string
+    imageWidth: number
+    imageHeight: number
+    monitorSize: string
+  }
   pin: {
     pins: PinProps[]
   }
@@ -26,21 +31,22 @@ type IndexTypes = {
 // ===============================
 
 const urlSelector: ({
-  url: { imagePath, imageWidth, imageHeight },
+  url: { imagePath, imageWidth, imageHeight, monitorSize },
   pin: { pins }
 }: IndexTypes) => AddUrlImageProps & { pins: PinProps[] } = ({
-  url: { imagePath, imageWidth, imageHeight },
+  url: { imagePath, imageWidth, imageHeight, monitorSize },
   pin: { pins }
 }) => ({
   imagePath,
   imageWidth,
   imageHeight,
+  monitorSize,
   pins
 })
 
 const View: React.FC<Props> = ({ className }) => {
   const urlStatus = useSelector(urlSelector)
-  const { imagePath, imageWidth, imageHeight, pins } = urlStatus
+  const { imagePath, imageWidth, imageHeight, monitorSize, pins } = urlStatus
 
   usePreventWindowUnload(true)
 
@@ -50,11 +56,12 @@ const View: React.FC<Props> = ({ className }) => {
 
   return (
     <div className={className}>
-      <h1>修正指示を編集しましょう ✍️</h1>
+      <h1>フィードバックをしましょう ✍️</h1>
       <Edit
         screenshot={imagePath}
         screenshotWidth={imageWidth}
         screenshotHeight={imageHeight}
+        monitorSize={monitorSize}
         pins={pins}
       />
     </div>

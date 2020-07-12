@@ -20,6 +20,7 @@ interface Props {
   screenshot: string
   screenshotWidth: number
   screenshotHeight: number
+  monitorSize?: string
   error?: string | undefined
 }
 
@@ -27,26 +28,24 @@ interface Props {
 // @Component
 // ===============================
 
-// const pinsSelector = ({ pin: { pins } }) => pins
-
 const View: React.FC<Props> = ({
   className,
   screenshot,
   screenshotWidth,
   screenshotHeight,
+  monitorSize,
   error
 }) => {
   if (error) return <Retry />
 
-  // TODO 戻るボタンを押したときに、redux-urlをリセット
-
   return (
     <div className={className}>
-      <h1>修正指示を編集しましょう ✍️</h1>
+      <h1>フィードバックをしましょう ✍️</h1>
       <Edit
         screenshot={screenshot}
         screenshotWidth={screenshotWidth}
         screenshotHeight={screenshotHeight}
+        monitorSize={monitorSize}
       />
     </div>
   )
@@ -58,11 +57,12 @@ View.propTypes = {
   screenshot: PropTypes.string.isRequired,
   screenshotWidth: PropTypes.number.isRequired,
   screenshotHeight: PropTypes.number.isRequired,
-  error: PropTypes?.string.isRequired
+  monitorSize: PropTypes.string.isRequired,
+  error: PropTypes.string.isRequired
 }
 
 export const getServerSideProps: GetServerSideProps<ScreenshotAllType> = async ({
-  query: { src, error }
+  query: { src, username, password, monitorSize, error }
 }) => {
   if (error || !src) {
     return {
@@ -76,13 +76,19 @@ export const getServerSideProps: GetServerSideProps<ScreenshotAllType> = async (
     screenshot,
     screenshotWidth,
     screenshotHeight
-  } = (await getScreenshot(src as string)) as ScreenshotType
+  } = (await getScreenshot(
+    src,
+    username,
+    password,
+    monitorSize
+  )) as ScreenshotType
 
   return {
     props: {
       screenshot,
       screenshotWidth,
-      screenshotHeight
+      screenshotHeight,
+      monitorSize
     }
   }
 }

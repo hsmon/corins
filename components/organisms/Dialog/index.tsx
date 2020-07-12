@@ -19,7 +19,7 @@ interface Props {
 
 const View: React.FC<Props> = ({ className, isOpen, onClickClose, alert }) => {
   return (
-    <Dialog className={className} isOpen={isOpen} onClickOverlay={onClickClose}>
+    <Dialog isOpen={isOpen} onClickOverlay={onClickClose}>
       <p>{alert}</p>
       <button onClick={onClickClose}>閉じる</button>
     </Dialog>

@@ -7,6 +7,7 @@ import { useRouter } from 'next/router'
 import Retry from '~/components/organisms/Retry'
 import { AddUrlImageProps } from '~/redux/urls/reducer'
 import { PinProps } from '~/redux/pins/reducer'
+import Link from 'next/link'
 
 // ===============================
 // @Types
@@ -25,21 +26,50 @@ type IndexTypes = {
 // @Component
 // ===============================
 const urlSelector: ({
-  url: { imagePath, imageWidth, imageHeight },
+  url: {
+    src,
+    imagePath,
+    imageWidth,
+    imageHeight,
+    username,
+    password,
+    monitorSize
+  },
   pin: { pins }
 }: IndexTypes) => AddUrlImageProps & { pins: PinProps[] } = ({
-  url: { imagePath, imageWidth, imageHeight },
+  url: {
+    src,
+    imagePath,
+    imageWidth,
+    imageHeight,
+    username,
+    password,
+    monitorSize
+  },
   pin: { pins }
 }) => ({
+  src,
   imagePath,
   imageWidth,
   imageHeight,
+  username,
+  password,
+  monitorSize,
   pins
 })
 
 const View: React.FC<Props> = ({ className }) => {
   const urlStatus = useSelector(urlSelector)
-  const { imagePath, imageWidth, imageHeight, pins } = urlStatus
+  const {
+    src,
+    imagePath,
+    imageWidth,
+    imageHeight,
+    username,
+    password,
+    monitorSize,
+    pins
+  } = urlStatus
   const router = useRouter()
 
   const scrollPosition = React.useCallback(
@@ -50,8 +80,20 @@ const View: React.FC<Props> = ({ className }) => {
     []
   )
 
-  const toRedo: () => void = () => {
-    router.push('/redo')
+  const toFix: () => void = async () => {
+    // ページ遷移
+    await router.push({
+      pathname: '/fix',
+      query: {
+        src,
+        imageWidth,
+        imageHeight,
+        username,
+        password,
+        monitorSize,
+        pins: JSON.stringify(pins)
+      }
+    })
   }
 
   usePreventWindowUnload(true)
@@ -67,18 +109,16 @@ const View: React.FC<Props> = ({ className }) => {
           <p className="confirm__text">以下の内容でよろしいでしょうか？</p>
           <div
             className="confirm__check"
-            style={{
-              height: `${imageHeight * 0.5 + 50}px`
-            }}
+            style={{ width: imageWidth * 0.5, margin: '0 auto' }}
           >
             <div
               className="images"
               style={{
                 background: `url(data:image/png;base64,${imagePath})`,
                 backgroundSize: 'cover',
-                width: '50%',
+                width: '100%',
                 height: 0,
-                paddingTop: `${(imageHeight / imageWidth) * 50}%`,
+                paddingTop: `${(imageHeight / imageWidth) * 100}%`,
                 margin: '0 auto',
                 position: 'relative'
               }}
@@ -128,10 +168,16 @@ const View: React.FC<Props> = ({ className }) => {
             </ol>
           </div>
           <div className="confirm__button-list">
-            <button className="confirm__button--confirm">修正指示を確定</button>
-            <button className="confirm__button--redo" onClick={toRedo}>
-              やりなおす
-            </button>
+            <form method="post" onSubmit={toFix}>
+              <input
+                className="confirm__button--confirm"
+                type="submit"
+                value="修正指示を確定"
+              />
+            </form>
+            <Link href="/redo">
+              <a className="confirm__button--redo">やりなおす</a>
+            </Link>
           </div>
         </>
       ) : (
@@ -207,17 +253,22 @@ export default styled(View)`
         display: flex;
         max-width: 800px;
         margin: 0 auto;
-        > button {
+        form {
+          display: block;
+          width: 100%;
+          + a {
+            margin-left: 2em;
+          }
+        }
+        a,
+        input {
           display: block;
           width: 100%;
           border-radius: 6px;
           cursor: pointer;
           font-size: 1.4rem;
           padding: 10px 0;
-
-          + button {
-            margin-left: 2em;
-          }
+          text-align: center;
         }
       }
       &--confirm {
@@ -231,6 +282,7 @@ export default styled(View)`
       &--redo {
         background: ${({ theme }) => theme.colors.whitesmoke};
         transition: 0.3s;
+        color: ${({ theme }) => theme.colors.black};
         &:hover {
           background: ${({ theme }) => theme.colors.silver};
         }
@@ -285,8 +337,13 @@ export default styled(View)`
           display: block;
           padding: 10px;
           font-size: 12px;
-          background: ${({ theme }) => theme.colors.whitesmoke};
-          transform: translate3d(-50%, 10px, 0);
+          background: ${({ theme }) => theme.colors.yellow};
+          position: absolute;
+          min-width: 150px;
+          top: 30px;
+          left: 50%;
+          transform: translateX(-50%);
+          border-radius: 20px;
         }
       }
     }

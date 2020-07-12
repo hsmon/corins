@@ -7,6 +7,9 @@ import {
 
 export type AddUrlProps = {
   src: string
+  username?: string | null
+  password?: string | null
+  monitorSize?: string | null
 }
 
 export type RemoveUrlProps = {
@@ -39,8 +42,7 @@ export default function urlReducer(
       }
     case REMOVE_URL_STATE:
       return {
-        ...state,
-        ...payload
+        ...state
       }
     case ADD_URL_IMAGE:
       return {

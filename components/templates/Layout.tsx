@@ -9,7 +9,7 @@ interface Props {
 const View: React.FC<Props> = ({ className, children }) => {
   return (
     <>
-      <Header idName="header" />
+      <Header />
       <div className={className}>{children}</div>
     </>
   )
@@ -24,7 +24,7 @@ export default styled(View)`
   position: relative;
   margin: 0 auto;
   min-width: 1200px;
-  padding: 5em ${({ theme }) => theme.sideSpace.large};
+  padding: 5em 0;
   @media screen and (max-width: ${({ theme }) => theme.responsive.large}) {
     max-width: 760px;
   }

@@ -2,7 +2,7 @@ import {
   AddUrlProps,
   RemoveUrlProps,
   AddUrlImageProps,
-  allUrlProps
+  AllUrlProps
 } from '~/redux/urls/reducer'
 
 // constants
@@ -12,7 +12,7 @@ export const ADD_URL_IMAGE = 'ADD_URL_IMAGE' as const
 
 type Props = {
   type: string
-  payload: allUrlProps
+  payload: AllUrlProps
 }
 
 export const addUrlStateValue: (payload: AddUrlProps) => Props = (payload) => ({

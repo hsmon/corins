@@ -11,6 +11,9 @@ import Retry from '~/components/organisms/Retry'
 import Dialog from '~/components/organisms/Dialog'
 import texts from '~/assets/text'
 import { useRouter } from 'next/router'
+import monitorSize from '~/assets/monitorSize'
+
+const { PC, TB, SP } = monitorSize
 
 // ===============================
 // @Types
@@ -20,6 +23,7 @@ interface Props {
   screenshot: string
   screenshotWidth: number
   screenshotHeight: number
+  monitorSize?: string
   pins?: PinProps[]
 }
 
@@ -31,7 +35,8 @@ const View: React.FC<Props> = ({
   screenshot,
   screenshotWidth,
   screenshotHeight,
-  pins
+  pins,
+  monitorSize
 }) => {
   const [pinState, setPinState] = React.useState<PinProps>(null)
   const [pinArray, setPinArray] = React.useState<PinProps[]>(pins ?? [])
@@ -121,7 +126,8 @@ const View: React.FC<Props> = ({
   const checkAllText: () => boolean = React.useCallback(() => {
     if (!pinArray.length) return false
 
-    const results: boolean[] = pinArray.map(({ text }) => {
+    const results: boolean[] = pinArray.map((item) => {
+      const [text] = [item?.text ?? '']
       if (text.length) return true
       return false
     })
@@ -150,9 +156,27 @@ const View: React.FC<Props> = ({
     }
   }
 
+  const handleMonitorSize: (monitorSize: string) => number = (
+    monitorSize = 'PC'
+  ) => {
+    switch (monitorSize) {
+      case 'PC':
+        return PC.width
+      case 'TB':
+        return TB.width
+      case 'SP':
+        return SP.width
+      default:
+        return PC.width
+    }
+  }
+
   return (
     <form className={className} method="post" onSubmit={handleSubmit}>
-      <div id="edit">
+      <div
+        id="edit"
+        style={{ maxWidth: handleMonitorSize(monitorSize), margin: '0 auto' }}
+      >
         {screenshot ? (
           <div
             className="images"
@@ -221,7 +245,11 @@ const View: React.FC<Props> = ({
               : 'pins__text-list__wrapper'
           }
         >
-          <button onClick={() => setIsOpen(!isOpen)} tabIndex={1} />
+          <button
+            type="button"
+            onClick={() => setIsOpen(!isOpen)}
+            tabIndex={1}
+          />
           <ol className="pins__text-list">
             {pinArray.map((item: PinProps, index: number) => {
               const [x, y, text] = [
@@ -271,7 +299,8 @@ View.propTypes = {
   screenshot: PropTypes.string.isRequired,
   screenshotWidth: PropTypes.number.isRequired,
   screenshotHeight: PropTypes.number.isRequired,
-  pins: PropTypes.array.isRequired
+  pins: PropTypes.array.isRequired,
+  monitorSize: PropTypes.string.isRequired
 }
 
 // ===============================

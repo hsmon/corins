@@ -1,27 +1,57 @@
 import puppeteer from 'puppeteer'
 import { imageSize } from 'image-size'
+import monitorSize from '~/assets/monitorSize'
 
+const { PC, TB, SP } = monitorSize
 const dev = process.env.NODE_ENV !== 'production'
 
 export type ScreenshotType = {
   screenshot: Buffer | string | undefined | null
   screenshotWidth: number | undefined | null
   screenshotHeight: number | undefined | null
+  username?: string | null
+  password?: string | null
+  monitorSize?: string | null
 }
 export type ScreenshotErrorType = {
   error?: string | undefined | null
 }
-
 export type ScreenshotAllType = ScreenshotType | ScreenshotErrorType
 
-export default async (src: string): Promise<ScreenshotAllType> => {
+const selectMonitorSize: (
+  monitorSize: string
+) => { width: number; height: number } = (monitorSize = 'PC') => {
+  switch (monitorSize) {
+    case 'PC':
+      return { width: PC.width, height: PC.height }
+    case 'TB':
+      return { width: TB.width, height: TB.height }
+    case 'SP':
+      return { width: SP.width, height: SP.height }
+    default:
+      return { width: PC.width, height: PC.height }
+  }
+}
+
+export default async (
+  src: string,
+  username: string,
+  password: string,
+  monitorSize: string
+): Promise<ScreenshotAllType> => {
   if (!src) {
     return { error: 'error' }
   }
 
+  const { width, height } = await selectMonitorSize(monitorSize)
+
   const browser = await puppeteer.launch()
   const page = await browser.newPage()
-  page.setViewport({ width: 1200, height: 800 })
+  await page.authenticate({
+    username,
+    password
+  })
+  page.setViewport({ width, height })
   await page.goto(src)
   await page
     .waitForNavigation({
@@ -39,7 +69,7 @@ export default async (src: string): Promise<ScreenshotAllType> => {
   const screenshotWidth = dimensions.width
   const screenshotHeight = dimensions.height
 
-  screenshot = screenshot.toString('base64')
+  screenshot = Buffer.from(screenshot).toString('base64')
 
   return {
     screenshot,

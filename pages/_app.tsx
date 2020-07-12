@@ -41,32 +41,36 @@ const App = ({ Component, pageProps }: AppProps) => {
         <title>{texts.title}</title>
       </Head>
       <ReduxProvider store={store}>
-        <StyledThemeProvider theme={styledTheme}>
-          <ThemeProvider theme={theme}>
-            <Layout>
-              {!!loading ? (
-                <div
-                  style={{
-                    position: 'fixed',
-                    top: '0',
-                    right: '0',
-                    bottom: '0',
-                    left: '0',
-                    zIndex: 1000,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center'
-                  }}
-                >
-                  <Loader size="l" color="#00a5ab" />
-                </div>
-              ) : (
-                <Component {...pageProps} />
-              )}
-            </Layout>
-          </ThemeProvider>
-          <GlobalStyle />
-        </StyledThemeProvider>
+        {typeof window !== 'undefined' ? (
+          <StyledThemeProvider theme={styledTheme}>
+            <ThemeProvider theme={theme}>
+              <Layout>
+                {!!loading ? (
+                  <div
+                    style={{
+                      position: 'fixed',
+                      top: '0',
+                      right: '0',
+                      bottom: '0',
+                      left: '0',
+                      zIndex: 1000,
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center'
+                    }}
+                  >
+                    <Loader size="l" color="#00a5ab" />
+                  </div>
+                ) : (
+                  <Component {...pageProps} />
+                )}
+              </Layout>
+            </ThemeProvider>
+            <GlobalStyle />
+          </StyledThemeProvider>
+        ) : (
+          <p>loading...</p>
+        )}
       </ReduxProvider>
     </>
   )

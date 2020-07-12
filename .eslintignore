@@ -5,3 +5,5 @@ next.config.js
 
 _app.tsx
 _document.tsx
+
+db
