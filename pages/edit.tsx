@@ -3,10 +3,7 @@ import styled from 'styled-components'
 import PropTypes from 'prop-types'
 import { GetServerSideProps } from 'next'
 
-import getScreenshot, {
-  ScreenshotAllType,
-  ScreenshotType
-} from '~/pages/api/screenshot'
+import getScreenshot, { ScreenshotAllType } from '~/pages/api/screenshot'
 
 import Retry from '~/components/organisms/Retry'
 import Edit from '~/components/pages/Edit'
@@ -72,16 +69,12 @@ export const getServerSideProps: GetServerSideProps<ScreenshotAllType> = async (
     }
   }
 
-  const {
-    screenshot,
-    screenshotWidth,
-    screenshotHeight
-  } = (await getScreenshot(
-    src,
-    username,
-    password,
-    monitorSize
-  )) as ScreenshotType
+  const { screenshot, screenshotWidth, screenshotHeight } = await getScreenshot(
+    src as string,
+    username as string,
+    password as string,
+    monitorSize as string
+  )
 
   return {
     props: {

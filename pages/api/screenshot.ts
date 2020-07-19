@@ -16,11 +16,22 @@ export type ScreenshotType = {
 export type ScreenshotErrorType = {
   error?: string | undefined | null
 }
+
+type ReturnType = {
+  screenshot?: string
+  screenshotWidth?: number
+  screenshotHeight?: number
+  error?: 'error'
+}
+
 export type ScreenshotAllType = ScreenshotType | ScreenshotErrorType
 
 const selectMonitorSize: (
   monitorSize: string
-) => { width: number; height: number } = (monitorSize = 'PC') => {
+) => {
+  width: number
+  height: number
+} = (monitorSize = 'PC') => {
   switch (monitorSize) {
     case 'PC':
       return { width: PC.width, height: PC.height }
@@ -38,7 +49,7 @@ export default async (
   username: string,
   password: string,
   monitorSize: string
-): Promise<ScreenshotAllType> => {
+): Promise<ReturnType> => {
   if (!src) {
     return { error: 'error' }
   }

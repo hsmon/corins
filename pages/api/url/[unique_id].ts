@@ -1,8 +1,12 @@
 /* eslint-disable @typescript-eslint/camelcase */
 import DB from '~/lib/db'
 import escape from 'sql-template-strings'
+import { NextApiRequest, NextApiResponse } from 'next'
 
-export default async (req, res) => {
+export default async (
+  req: NextApiRequest,
+  res: NextApiResponse
+): Promise<void> => {
   const { unique_id } = req.query
   const url = await DB.query(escape`
       SELECT *

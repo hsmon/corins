@@ -5,7 +5,6 @@ import { useSelector } from 'react-redux'
 import { usePreventWindowUnload } from '~/hooks/usePreventWindowUnload'
 import { useRouter } from 'next/router'
 import Retry from '~/components/organisms/Retry'
-import { AddUrlImageProps } from '~/redux/urls/reducer'
 import { PinProps } from '~/redux/pins/reducer'
 import Link from 'next/link'
 
@@ -16,7 +15,15 @@ interface Props {
   className?: string
 }
 type IndexTypes = {
-  url: AddUrlImageProps
+  url: {
+    src: string
+    imagePath: string
+    imageWidth: number
+    imageHeight: number
+    username: string
+    password: string
+    monitorSize: string
+  }
   pin: {
     pins: PinProps[]
   }
@@ -36,7 +43,16 @@ const urlSelector: ({
     monitorSize
   },
   pin: { pins }
-}: IndexTypes) => AddUrlImageProps & { pins: PinProps[] } = ({
+}: IndexTypes) => {
+  src: string
+  imagePath: string
+  imageWidth: number
+  imageHeight: number
+  username: string
+  password: string
+  monitorSize: string
+  pins: PinProps[]
+} = ({
   url: {
     src,
     imagePath,

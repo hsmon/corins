@@ -1,4 +1,5 @@
 import mysql from 'serverless-mysql'
+import { SQLStatement } from 'sql-template-strings'
 
 const db = mysql({
   config: {
@@ -9,13 +10,11 @@ const db = mysql({
   }
 })
 
-type Query = {
-  query: string
-}
-
-async function query(query) {
+async function query(
+  query: SQLStatement
+): Promise<SQLStatement | { error: unknown }> {
   try {
-    const results = await db.query(query)
+    const results = await db.query<SQLStatement>(query)
     await db.end()
     return results
   } catch (error) {
@@ -23,9 +22,11 @@ async function query(query) {
   }
 }
 
-async function insert(query) {
+async function insert(
+  query: SQLStatement
+): Promise<SQLStatement[] | { error: unknown }> {
   try {
-    const results = await db.transaction().query(query).commit()
+    const results = await db.transaction().query(query).commit<SQLStatement>()
     await db.end()
     return results
   } catch (error) {

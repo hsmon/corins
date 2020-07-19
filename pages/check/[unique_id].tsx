@@ -6,8 +6,27 @@ import { PinProps } from '~/redux/pins/reducer'
 import React from 'react'
 import Toggle from '~/components/molecules/Toggle'
 import Board from '~/components/molecules/Board'
+import PropTypes from 'prop-types'
+import { Url } from '~/types/mysql'
 
-const View: React.FC = ({ className, url }) => {
+// ===============================
+// @Types
+// ===============================
+type UrlTypes = {
+  unique_id: number
+  image_height: number
+  image_width: number
+  src: string
+}
+interface Props {
+  className?: string
+  url: UrlTypes[]
+}
+
+// ===============================
+// @Component
+// ===============================
+const View: React.FC<Props> = ({ className, url }) => {
   const { unique_id, image_height, image_width, src } = url[0]
   const [uniqueId, imageHeight, imageWidth, pins] = [
     unique_id,
@@ -123,14 +142,14 @@ export const getStaticPaths: GetStaticPaths = async () => {
   // const host = req ? req.headers['x-forwarded-host'] : location.host
   const pageRequest = 'http://localhost:3000/api/url/get'
   const res = await fetch(pageRequest)
-  const urls = await res.json()
+  const urls: Url[] = await res.json()
   const paths = urls.map((url) => `/check/${url.unique_id}`)
 
   return { paths, fallback: false }
 }
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const pageRequest = `http://localhost:3000/api/url/${params.unique_id}`
+  const pageRequest = `http://localhost:3000/api/url/${params?.unique_id ?? ''}`
   const res = await fetch(pageRequest)
   const url = await res.json()
   return {
@@ -139,6 +158,15 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     }
   }
 }
+
+View.propTypes = {
+  className: PropTypes.string.isRequired,
+  url: PropTypes.array.isRequired
+}
+
+// ===============================
+// @Styled
+// ===============================
 
 export default styled(View)`
   .title {

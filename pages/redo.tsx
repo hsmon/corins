@@ -3,7 +3,6 @@ import styled from 'styled-components'
 import PropTypes from 'prop-types'
 import { useSelector } from 'react-redux'
 import { usePreventWindowUnload } from '~/hooks/usePreventWindowUnload'
-import { AddUrlImageProps } from '~/redux/urls/reducer'
 import { PinProps } from '~/redux/pins/reducer'
 import Edit from '~/components/pages/Edit'
 
@@ -16,6 +15,7 @@ interface Props {
 
 type IndexTypes = {
   url: {
+    src: string
     imagePath: string
     imageWidth: number
     imageHeight: number
@@ -31,12 +31,20 @@ type IndexTypes = {
 // ===============================
 
 const urlSelector: ({
-  url: { imagePath, imageWidth, imageHeight, monitorSize },
+  url: { src, imagePath, imageWidth, imageHeight, monitorSize },
   pin: { pins }
-}: IndexTypes) => AddUrlImageProps & { pins: PinProps[] } = ({
-  url: { imagePath, imageWidth, imageHeight, monitorSize },
+}: IndexTypes) => {
+  src: string
+  imagePath: string
+  imageWidth: number
+  imageHeight: number
+  monitorSize: string
+  pins: PinProps[]
+} = ({
+  url: { src, imagePath, imageWidth, imageHeight, monitorSize },
   pin: { pins }
 }) => ({
+  src,
   imagePath,
   imageWidth,
   imageHeight,

@@ -18,7 +18,7 @@ type IndexTypes = {
     src: string
     username: number | null
     password: number | null
-    monitor: string | null
+    monitorSize: string | null
   }
 }
 
@@ -26,7 +26,7 @@ type IndexTypes = {
 // @Component
 // ===============================
 const urlSelector: ({
-  url: { src, username, password }
+  url: { src, username, password, monitorSize }
 }: IndexTypes) => {
   src: string
   username?: number | null

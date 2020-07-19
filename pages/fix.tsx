@@ -2,9 +2,8 @@ import styled from 'styled-components'
 import PropTypes from 'prop-types'
 import { GetServerSideProps } from 'next'
 import Link from 'next/link'
-import getScreenshot, { ScreenshotType } from '~/pages/api/screenshot'
+import getScreenshot from '~/pages/api/screenshot'
 import postStatus from '~/pages/api/url/post'
-import { PinProps } from '~/redux/pins/reducer'
 import { Input } from 'smarthr-ui'
 import Retry from '~/components/organisms/Retry'
 
@@ -57,28 +56,44 @@ View.propTypes = {
   uniqueId: PropTypes.string.isRequired
 }
 
-export const getServerSideProps: GetServerSideProps = async ({
-  query: { src, imageWidth, imageHeight, username, password, monitorSize, pins }
+export const getServerSideProps: GetServerSideProps<Props> = async ({
+  query
 }) => {
-  const { screenshot } = (await getScreenshot(
-    src as string,
-    username as string,
-    password as string,
-    monitorSize as string
-  )) as ScreenshotType
-  const { uniqueId } = await postStatus({
-    imagePath: screenshot,
+  const [
+    src,
+    imageWidth,
+    imageHeight,
+    username,
+    password,
+    monitorSize,
+    pins
+  ] = [
+    query.src as string,
+    (query.imageWidth as unknown) as number,
+    (query.imageHeight as unknown) as number,
+    query.username as string,
+    query.password as string,
+    query.monitorSize as string,
+    query.pins as string
+  ]
+  const { screenshot } = await getScreenshot(
+    src,
+    username,
+    password,
+    monitorSize
+  )
+
+  const result = await postStatus({
+    imagePath: screenshot as string,
     imageWidth,
     imageHeight,
     pins
   })
-
-  console.log({ imageWidth, imageHeight, uniqueId })
+  const [uniqueId] = [result]
 
   return {
     props: {
-      src,
-      uniqueId
+      uniqueId: uniqueId as string
     }
   }
 }
