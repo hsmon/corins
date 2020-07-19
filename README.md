@@ -2,13 +2,11 @@
 
 corinsはWeb製作者向けに、フィードバックを行えるツールです。  
 
-***
 
 ## Going to try
 
 
 
-***
 
 ## How to
 
@@ -19,7 +17,6 @@ corinsはWeb製作者向けに、フィードバックを行えるツールで�
 <img src="https://user-images.githubusercontent.com/29920723/87234985-a8944980-c411-11ea-8e84-700a07ef49c6.gif" alt="属性" title="howto">
 </div>
 
-***
 
 ## 技術スタック
 
@@ -44,7 +41,6 @@ corinsはWeb製作者向けに、フィードバックを行えるツールで�
 - ESLint
 - Prettier
 
-***
 
 ## TODO
 
