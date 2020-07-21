@@ -1,5 +1,4 @@
 import React from 'react'
-import { Dialog } from 'smarthr-ui'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 
@@ -8,7 +7,6 @@ import PropTypes from 'prop-types'
 // ===============================
 interface Props {
   className?: string
-  isOpen: boolean
   onClickClose: () => void
   alert: string
 }
@@ -17,20 +15,21 @@ interface Props {
 // @Component
 // ===============================
 
-const View: React.FC<Props> = ({ className, isOpen, onClickClose, alert }) => {
+const View: React.FC<Props> = ({ className, onClickClose, alert }) => {
   return (
     <div className={className}>
-      <Dialog isOpen={isOpen} onClickOverlay={onClickClose}>
-        <p>{alert}</p>
-        <button onClick={onClickClose}>閉じる</button>
-      </Dialog>
+      <div className="wrapper">
+        <div className="conts">
+          <p>{alert}</p>
+          <button onClick={onClickClose}>閉じる</button>
+        </div>
+      </div>
     </div>
   )
 }
 
 View.propTypes = {
   className: PropTypes.string.isRequired,
-  isOpen: PropTypes.bool.isRequired,
   onClickClose: PropTypes.func.isRequired,
   alert: PropTypes.string.isRequired
 }
@@ -42,6 +41,36 @@ View.propTypes = {
 export default styled(View)`
   padding: 3em;
   text-align: center;
+  .wrapper {
+    background: rgba(0, 0, 0, 0.2);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: 0.5s ease;
+  }
+  .conts {
+    position: relative;
+    z-index: 101;
+    background: #fff;
+    max-width: 500px;
+    position: relative;
+    margin: 0 auto;
+    padding: 5em 2em;
+    border-radius: 10px;
+    @media screen and (max-width: ${({ theme }) => theme.responsive.large}) {
+      max-width: 760px;
+    }
+    @media screen and (max-width: ${({ theme }) => theme.responsive.small}) {
+      padding: 2.5em ${({ theme }) => theme.sideSpace.small};
+    }
+  }
   p {
     font-size: 1.2rem;
   }

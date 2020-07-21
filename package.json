@@ -28,7 +28,6 @@
     "redux": "^4.0.5",
     "redux-saga": "^1.1.3",
     "serverless-mysql": "^1.5.4",
-    "smarthr-ui": "^8.4.0",
     "sql-template-strings": "^2.2.2",
     "styled-components": "^5.1.1"
   },

@@ -4,7 +4,6 @@ import { GetServerSideProps } from 'next'
 import Link from 'next/link'
 import getScreenshot from '~/pages/api/screenshot'
 import postStatus from '~/pages/api/url/post'
-import { Input } from 'smarthr-ui'
 import Retry from '~/components/organisms/Retry'
 
 // ===============================
@@ -36,7 +35,7 @@ const View: React.FC<Props> = ({ className, uniqueId }) => {
         </span>
       </p>
       <p className="fix__text">共有リンクはこちら</p>
-      <Input
+      <input
         className="fix__input"
         type="text"
         value={`${window.location.origin}/check/${uniqueId}`}
@@ -89,11 +88,11 @@ export const getServerSideProps: GetServerSideProps<Props> = async ({
     imageHeight,
     pins
   })
-  const [uniqueId] = [result]
+  const { uniqueId } = result as { uniqueId: string }
 
   return {
     props: {
-      uniqueId: uniqueId as string
+      uniqueId
     }
   }
 }
@@ -126,6 +125,8 @@ export default styled(View)`
       margin: 0 auto 4em;
       font-size: 1.4rem;
       padding: 0.5em 1em;
+      border: solid ${({ theme }) => theme.colors.green};
+      border-radius: 6px;
     }
     &__button {
       text-align: center;

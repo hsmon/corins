@@ -1,6 +1,5 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Input } from 'smarthr-ui'
 import PropTypes from 'prop-types'
 import { useDispatch } from 'react-redux'
 import { addUrlStateValue } from '~/redux/urls/actions'
@@ -52,7 +51,7 @@ const View: React.FC<Props> = (props) => {
 
   return (
     <form className={props.className} method="post" onSubmit={handleSubmit}>
-      <Input
+      <input
         type="url"
         name="url"
         value={src}
@@ -100,7 +99,7 @@ const View: React.FC<Props> = (props) => {
           <>
             <p className="checkbox__element">
               <span>ユーザー名</span>
-              <Input
+              <input
                 type="text"
                 className="sub"
                 name="username"
@@ -110,7 +109,7 @@ const View: React.FC<Props> = (props) => {
             </p>
             <p className="checkbox__element">
               <span>パスワード</span>
-              <Input
+              <input
                 type="password"
                 className="sub"
                 name="password"
@@ -153,6 +152,14 @@ export default styled(View)`
     }
   }
   input {
+    &[type='url'] {
+      border: solid ${({ theme }) => theme.colors.green};
+      border-radius: 6px;
+      transition: border 0.2s;
+      &:focus {
+        border: 4px solid ${({ theme }) => theme.colors.blue2};
+      }
+    }
     &[type='radio'] {
       appearance: radio;
       cursor: pointer;
@@ -190,7 +197,8 @@ export default styled(View)`
     .sub {
       margin: 0 auto;
       font-size: 16px;
-      border: 1px solid #d6d6d6;
+      border: solid #d6d6d6;
+      border-radius: 6px;
     }
     label {
       cursor: pointer;

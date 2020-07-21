@@ -1,7 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
 import { PinProps } from '~/redux/pins/reducer'
-import { Textarea } from 'smarthr-ui'
 import PropTypes from 'prop-types'
 import { useDispatch } from 'react-redux'
 import { addUrlImage } from '~/redux/urls/actions'
@@ -175,7 +174,10 @@ const View: React.FC<Props> = ({
     <form className={className} method="post" onSubmit={handleSubmit}>
       <div
         id="edit"
-        style={{ maxWidth: handleMonitorSize(monitorSize), margin: '0 auto' }}
+        style={{
+          maxWidth: handleMonitorSize(monitorSize as string),
+          margin: '0 auto'
+        }}
       >
         {screenshot ? (
           <div
@@ -217,13 +219,16 @@ const View: React.FC<Props> = ({
                           onClick={() => removePin(index)}
                           tabIndex={-1}
                         />
-                        <Textarea
+                        <textarea
                           value={text}
-                          className="pins__textarea"
+                          className={
+                            checkText(text)
+                              ? 'pins__textarea _blank'
+                              : 'pins__textarea'
+                          }
                           placeholder={texts.alert}
                           onChange={(e) => addPinText(e, item, index)}
                           onBlur={(e) => addPinText(e, item, index)}
-                          error={checkText(text)}
                           autoFocus={true}
                         />
                       </li>
@@ -267,12 +272,12 @@ const View: React.FC<Props> = ({
                     tabIndex={-1}
                   />
                   <button onClick={() => removePin(index)} tabIndex={-1} />
-                  <Textarea
+                  <textarea
                     value={text}
                     placeholder={texts.alert}
                     onChange={(e) => addPinText(e, item, index)}
                     onBlur={(e) => addPinText(e, item, index)}
-                    error={checkText(text)}
+                    className={checkText(text) ? '_blank' : undefined}
                   />
                 </li>
               )
@@ -284,11 +289,7 @@ const View: React.FC<Props> = ({
 
       {/* テキスト未入力の場合はダイアログを表示 */}
       {!!isDialogOpen && (
-        <Dialog
-          isOpen={isDialogOpen}
-          onClickClose={onClickClose}
-          alert={texts.alert}
-        />
+        <Dialog onClickClose={onClickClose} alert={texts.alert} />
       )}
     </form>
   )
@@ -409,6 +410,7 @@ export default styled(View)`
       transition: 0.5s ease;
       resize: none;
       height: 44px;
+      font-size: 1rem;
       &:focus {
         opacity: 1;
       }
@@ -590,6 +592,19 @@ export default styled(View)`
     &:hover,
     &:focus {
       background: ${({ theme }) => theme.colors.blue4};
+    }
+  }
+  textarea {
+    border-radius: 6px;
+    border: 2px solid ${({ theme }) => theme.colors.green};
+    padding: 0.5em;
+    outline: none;
+    &._blank {
+      border-color: ${({ theme }) => theme.colors.red};
+    }
+    :focus,
+    :active {
+      border-color: ${({ theme }) => theme.colors.green};
     }
   }
 `
