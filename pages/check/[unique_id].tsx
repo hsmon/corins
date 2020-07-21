@@ -135,12 +135,16 @@ const View: React.FC<Props> = ({ className, url }) => {
   )
 }
 
+const dev = process.env.NODE_ENV !== 'production'
+
 export const getStaticPaths: GetStaticPaths = async () => {
   // const protocol = req
   //   ? `${req.headers['x-forwarded-proto']}:`
   //   : location.protocol
   // const host = req ? req.headers['x-forwarded-host'] : location.host
-  const pageRequest = 'http://localhost:3000/api/url/get'
+  const pageRequest = dev
+    ? 'http://localhost:3000/api/url/get'
+    : 'https://corins.ga/api/url/get'
   const res = await fetch(pageRequest)
   const urls: Url[] = await res.json()
   const paths = urls.map((url) => `/check/${url.unique_id}`)
@@ -149,7 +153,9 @@ export const getStaticPaths: GetStaticPaths = async () => {
 }
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const pageRequest = `http://localhost:3000/api/url/${params?.unique_id ?? ''}`
+  const pageRequest = dev
+    ? `http://localhost:3000/api/url/${params?.unique_id ?? ''}`
+    : `https://corins.ga/api/url/${params?.unique_id ?? ''}`
   const res = await fetch(pageRequest)
   const url = await res.json()
   return {
