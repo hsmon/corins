@@ -26,9 +26,13 @@ const globalStyle = createGlobalStyle<{ theme: ThemeType }>`
     font: inherit;
     vertical-align: baseline;
     -webkit-tap-highlight-color:rgba(0,0,0,0);
+    word-break: break-all;
   }
   html, body {
     height: 100%;
+  }
+  html {
+    scroll-behavior: smooth;
   }
   body {
     background: ${({ theme }) => theme.colors.background};
@@ -36,7 +40,7 @@ const globalStyle = createGlobalStyle<{ theme: ThemeType }>`
     line-height: 1.6;
     font-size: 100%;
     font-weight: 400;
-    font-family:'Raleway', 'Noto Sans JP', "Yu Gothic Medium", "游ゴシック Medium", YuGothic, "游ゴシック体", "ヒラギノ角ゴ Pro W3", "メイリオ", sans-serif;
+    font-family: "Yu Gothic Medium", "游ゴシック Medium", YuGothic, "游ゴシック体", "ヒラギノ角ゴ Pro W3", "メイリオ", sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     -webkit-text-size-adjust: 100%;

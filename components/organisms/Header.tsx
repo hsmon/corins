@@ -1,20 +1,36 @@
 import React from 'react'
 import styled from 'styled-components'
 import Link from 'next/link'
+import { useDispatch } from 'react-redux'
+import { removeUrlStateValue } from '~/redux/urls/actions'
+import PropTypes from 'prop-types'
 
 import texts from '~/assets/text/index'
 
-const Header: React.FC = () => {
+interface Props {
+  className?: string
+}
+
+const View: React.FC<Props> = ({ className }) => {
+  const dispatch = useDispatch()
+
+  const resetUrlStatus: () => void = () => {
+    dispatch(removeUrlStateValue({ src: '' }))
+  }
   return (
-    <HeaderWrapper>
+    <header className={className}>
       <Link href="/">
-        <a>{texts.title}</a>
+        <a onClick={resetUrlStatus}>{texts.title}</a>
       </Link>
-    </HeaderWrapper>
+    </header>
   )
 }
 
-const HeaderWrapper = styled.header`
+View.propTypes = {
+  className: PropTypes.string.isRequired
+}
+
+export default styled(View)`
   width: 100%;
   padding: 1em;
   text-align: right;
@@ -34,5 +50,3 @@ const HeaderWrapper = styled.header`
     margin-right: 3em;
   }
 `
-
-export default Header

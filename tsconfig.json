@@ -4,7 +4,8 @@
     "lib": [
       "dom",
       "dom.iterable",
-      "esnext"
+      "esnext",
+      "esnext.bigint",
     ],
     "allowJs": true,
     "skipLibCheck": true,
@@ -28,6 +29,6 @@
   "include": [
     "next-env.d.ts",
     "**/*.ts",
-    "**/*.tsx", "components/templates/Layout.jsx"
+    "**/*.tsx", "components/templates/Layout.jsx", "lib/db.js", "db/api/profiles/index.js"
   ]
 }

@@ -1,20 +1,30 @@
 import Header from '~/components/organisms/Header'
 import styled from 'styled-components'
+import PropTypes from 'prop-types'
 
-const Layout: React.FC = ({ children }) => {
+interface Props {
+  className?: string
+}
+
+const View: React.FC<Props> = ({ className, children }) => {
   return (
     <>
       <Header />
-      <Wrapper>{children}</Wrapper>
+      <div className={className}>{children}</div>
     </>
   )
 }
 
-const Wrapper = styled.div`
+View.propTypes = {
+  className: PropTypes.string.isRequired
+}
+
+export default styled(View)`
   max-width: ${({ theme }) => theme.sizes.maxWidth};
   position: relative;
   margin: 0 auto;
-  padding: 5em ${({ theme }) => theme.sideSpace.large};
+  min-width: 1200px;
+  padding: 5em 0;
   @media screen and (max-width: ${({ theme }) => theme.responsive.large}) {
     max-width: 760px;
   }
@@ -22,5 +32,3 @@ const Wrapper = styled.div`
     padding: 2.5em ${({ theme }) => theme.sideSpace.small};
   }
 `
-
-export default Layout

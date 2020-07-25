@@ -1,5 +1,6 @@
 const texts = {
-  title: '🚤 corins'
+  title: '🚤 corins',
+  alert: '修正指示を記入してください'
 }
 
 export type TextType = typeof texts
