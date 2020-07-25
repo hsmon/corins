@@ -13,7 +13,7 @@ export type AddUrlProps = {
 }
 
 export type RemoveUrlProps = {
-  src: null
+  src: string | null
 }
 
 export type AddUrlImageProps = {
@@ -42,7 +42,8 @@ export default function urlReducer(
       }
     case REMOVE_URL_STATE:
       return {
-        ...state
+        ...state,
+        ...payload
       }
     case ADD_URL_IMAGE:
       return {

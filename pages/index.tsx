@@ -59,7 +59,7 @@ const View: React.FC<Props> = ({ className }) => {
     <div className={className}>
       <h1>
         フィードバックするページ<small style={{ fontSize: '80%' }}>(URL)</small>
-        を教えて下さい ✏️
+        を教えて下さい 📝
       </h1>
       <UrlForm />
     </div>

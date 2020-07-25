@@ -15,7 +15,7 @@ const View: React.FC<Props> = ({ className }) => {
   const dispatch = useDispatch()
 
   const resetUrlStatus: () => void = () => {
-    dispatch(removeUrlStateValue)
+    dispatch(removeUrlStateValue({ src: '' }))
   }
   return (
     <header className={className}>

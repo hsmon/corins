@@ -8,6 +8,7 @@ import Toggle from '~/components/molecules/Toggle'
 import Board from '~/components/molecules/Board'
 import PropTypes from 'prop-types'
 import { Url } from '~/types/mysql'
+import Retry from '~/components/organisms/Retry'
 
 // ===============================
 // @Types
@@ -21,12 +22,16 @@ type UrlTypes = {
 interface Props {
   className?: string
   url: UrlTypes[]
+  error?: unknown
 }
 
 // ===============================
 // @Component
 // ===============================
-const View: React.FC<Props> = ({ className, url }) => {
+const View: React.FC<Props> = ({ className, url, error }) => {
+  if (error) {
+    return <Retry />
+  }
   const { unique_id, image_height, image_width, src } = url[0]
   const [uniqueId, imageHeight, imageWidth, pins] = [
     unique_id,
@@ -138,36 +143,40 @@ const View: React.FC<Props> = ({ className, url }) => {
 const dev = process.env.NODE_ENV !== 'production'
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  // const protocol = req
-  //   ? `${req.headers['x-forwarded-proto']}:`
-  //   : location.protocol
-  // const host = req ? req.headers['x-forwarded-host'] : location.host
   const pageRequest = dev
     ? 'http://localhost:3000/api/url/get'
-    : 'https://corins.ga/api/url/get'
+    : `https://${process.env.VERCEL_URL}/api/url/get`
   const res = await fetch(pageRequest)
   const urls: Url[] = await res.json()
   const paths = urls.map((url) => `/check/${url.unique_id}`)
-
   return { paths, fallback: false }
 }
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const pageRequest = dev
-    ? `http://localhost:3000/api/url/${params?.unique_id ?? ''}`
-    : `https://corins.ga/api/url/${params?.unique_id ?? ''}`
-  const res = await fetch(pageRequest)
-  const url = await res.json()
-  return {
-    props: {
-      url
+  try {
+    const pageRequest = dev
+      ? `http://localhost:3000/api/url/${params?.unique_id ?? ''}`
+      : `https://${process.env.VERCEL_URL}/api/url/${params?.unique_id ?? ''}`
+    const res = await fetch(pageRequest)
+    const url = await res.json()
+    return {
+      props: {
+        url
+      }
+    }
+  } catch (error) {
+    return {
+      props: {
+        error
+      }
     }
   }
 }
 
 View.propTypes = {
   className: PropTypes.string.isRequired,
-  url: PropTypes.array.isRequired
+  url: PropTypes.array.isRequired,
+  error: PropTypes.any.isRequired
 }
 
 // ===============================
