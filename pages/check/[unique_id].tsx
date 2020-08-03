@@ -10,8 +10,10 @@ import { Url } from '~/types/mysql'
 import Retry from '~/components/organisms/Retry'
 import getDBStatus from '~/pages/api/url/get'
 import getUniqueIdStatus from '~/pages/api/check/[unique_id]'
-import AdSense from 'react-adsense'
 import { useRouter } from 'next/router'
+// import AdSense from 'react-adsense'
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const AdSense = require('react-adsense')
 
 // ===============================
 // @Types
