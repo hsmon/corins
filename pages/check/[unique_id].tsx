@@ -10,6 +10,7 @@ import { Url } from '~/types/mysql'
 import Retry from '~/components/organisms/Retry'
 import getDBStatus from '~/pages/api/url/get'
 import getUniqueIdStatus from '~/pages/api/check/[unique_id]'
+import { useRouter } from 'next/router'
 
 // ===============================
 // @Types
@@ -30,9 +31,13 @@ interface Props {
 // @Component
 // ===============================
 const View: React.FC<Props> = ({ className, url, error }) => {
-  if (error) {
-    return <Retry />
+  const router = useRouter()
+  if (router.isFallback) {
+    return <p>読込中...</p>
   }
+
+  if (error || !url) return <Retry />
+
   const { unique_id, image_height, image_width, src } = url[0]
   const [uniqueId, imageHeight, imageWidth, pins] = [
     unique_id,
@@ -51,6 +56,7 @@ const View: React.FC<Props> = ({ className, url, error }) => {
     },
     []
   )
+
   return (
     <div className={className}>
       <p className="title">修正内容を確認しましょう 🤟</p>
@@ -145,7 +151,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   const res = await getDBStatus()
   const urls: Url[] = await JSON.parse(res)
   const paths = urls.map((url) => `/check/${url.unique_id}`)
-  return { paths, fallback: false }
+  return { paths, fallback: true }
 }
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
