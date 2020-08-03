@@ -58,13 +58,11 @@ export default async (
 
   const { width, height } = await selectMonitorSize(monitorSize)
 
-  const browser = dev
-    ? await localPuppeteer.launch()
-    : await puppeteer.launch({
-        args: chrome.args,
-        executablePath: await chrome.executablePath,
-        headless: chrome.headless
-      })
+  const browser = await puppeteer.launch({
+    args: chrome.args,
+    executablePath: await chrome.executablePath,
+    headless: chrome.headless
+  })
   const page = await browser.newPage()
 
   await Promise.all([
