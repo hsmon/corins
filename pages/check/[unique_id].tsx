@@ -10,6 +10,7 @@ import { Url } from '~/types/mysql'
 import Retry from '~/components/organisms/Retry'
 import getDBStatus from '~/pages/api/url/get'
 import getUniqueIdStatus from '~/pages/api/check/[unique_id]'
+import AdSense from 'react-adsense'
 
 // ===============================
 // @Types
@@ -136,6 +137,14 @@ const View: React.FC<Props> = ({ className, url, error }) => {
             )
           })}
         </ol>
+      </div>
+      <div style={{ display: 'flex', justifyContent: 'center' }}>
+        <AdSense.Google
+          client="ca-pub-2229321775479825"
+          slot="2346491777"
+          style={{ width: 500, height: 300, margin: '0 auto' }}
+          format=""
+        />
       </div>
     </div>
   )
