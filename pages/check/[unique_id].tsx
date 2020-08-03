@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/camelcase */
 import styled from 'styled-components'
 import { GetStaticProps, GetStaticPaths } from 'next'
-import fetch from 'node-fetch'
 import { PinProps } from '~/redux/pins/reducer'
 import React from 'react'
 import Toggle from '~/components/molecules/Toggle'
@@ -9,6 +8,8 @@ import Board from '~/components/molecules/Board'
 import PropTypes from 'prop-types'
 import { Url } from '~/types/mysql'
 import Retry from '~/components/organisms/Retry'
+import getDBStatus from '~/pages/api/url/get'
+import getUniqueIdStatus from '~/pages/api/check/[unique_id]'
 
 // ===============================
 // @Types
@@ -140,25 +141,17 @@ const View: React.FC<Props> = ({ className, url, error }) => {
   )
 }
 
-const dev = process.env.NODE_ENV !== 'production'
-
 export const getStaticPaths: GetStaticPaths = async () => {
-  const pageRequest = dev
-    ? 'http://localhost:3000/api/url/get'
-    : `https://${process.env.VERCEL_URL}/api/url/get`
-  const res = await fetch(pageRequest)
-  const urls: Url[] = await res.json()
+  const res = await getDBStatus()
+  const urls: Url[] = await JSON.parse(res)
   const paths = urls.map((url) => `/check/${url.unique_id}`)
   return { paths, fallback: false }
 }
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   try {
-    const pageRequest = dev
-      ? `http://localhost:3000/api/url/${params?.unique_id ?? ''}`
-      : `https://${process.env.VERCEL_URL}/api/url/${params?.unique_id ?? ''}`
-    const res = await fetch(pageRequest)
-    const url = await res.json()
+    const res = await getUniqueIdStatus(params ?? { error: 'error' })
+    const url = await JSON.parse(res)
     return {
       props: {
         url

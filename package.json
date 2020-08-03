@@ -19,7 +19,6 @@
     "aws-sdk": "^2.710.0",
     "hashids": "^2.2.1",
     "next": "9.4.4",
-    "node-fetch": "^2.6.0",
     "node-sass": "^4.14.1",
     "puppeteer": "^3.3.0",
     "react": "16.13.1",
