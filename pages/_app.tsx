@@ -26,7 +26,7 @@ const App = ({ Component, pageProps }: AppProps) => {
       console.log('findished')
       setLoading(false)
     }
-    const handleRouteChange = (url) => {
+    const handleRouteChange = (url: any) => {
       gtag.pageview(url)
     }
 
