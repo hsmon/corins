@@ -7,3 +7,5 @@ _app.tsx
 _document.tsx
 
 db
+
+lib/ga.ts

@@ -5,8 +5,7 @@ corinsはWeb製作者向けに、フィードバックを行えるツールで�
 
 ## Going to try
 
-
-
+[corins.ga](https://corins.ga/)
 
 ## How to
 
