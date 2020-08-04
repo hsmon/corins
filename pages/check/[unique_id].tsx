@@ -11,6 +11,7 @@ import Retry from '~/components/organisms/Retry'
 import getDBStatus from '~/pages/api/url/get'
 import getUniqueIdStatus from '~/pages/api/check/[unique_id]'
 import { useRouter } from 'next/router'
+import AdSense from '~/components/molecules/AdSense'
 
 // ===============================
 // @Types
@@ -142,6 +143,11 @@ const View: React.FC<Props> = ({ className, url, error }) => {
             )
           })}
         </ol>
+      </div>
+      <div
+        style={{ display: 'flex', justifyContent: 'center', margin: '2em 0' }}
+      >
+        <AdSense />
       </div>
     </div>
   )

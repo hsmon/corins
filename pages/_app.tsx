@@ -13,6 +13,8 @@ import Layout from '~/components/templates/Layout'
 
 import texts from '~/assets/text/index'
 
+import * as gtag from '~/lib/ga'
+
 const App = ({ Component, pageProps }: AppProps) => {
   const [loading, setLoading] = React.useState(false)
   React.useEffect(() => {
@@ -24,15 +26,22 @@ const App = ({ Component, pageProps }: AppProps) => {
       console.log('findished')
       setLoading(false)
     }
+    const handleRouteChange = (url: any) => {
+      gtag.pageview(url)
+    }
+
     router.events.on('routeChangeStart', start)
+    router.events.on('routeChangeComplete', handleRouteChange)
     router.events.on('routeChangeComplete', end)
     router.events.on('routeChangeError', end)
     return () => {
       router.events.off('routeChangeStart', start)
+      router.events.off('routeChangeComplete', handleRouteChange)
       router.events.off('routeChangeComplete', end)
       router.events.off('routeChangeError', end)
     }
   }, [loading])
+
   return (
     <>
       <Head>
