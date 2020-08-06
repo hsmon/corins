@@ -53,7 +53,6 @@ export default styled(View)`
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    transition: 0.5s ease;
   }
   .conts {
     position: relative;
