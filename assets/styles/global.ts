@@ -54,7 +54,7 @@ const globalStyle = createGlobalStyle<{ theme: ThemeType }>`
   a {
     color: ${({ theme }) => theme.colors.highlight};
     text-decoration: none;
-    transition: .5s;
+    transition: .5s color;
     :focus{
       outline: none;
     }

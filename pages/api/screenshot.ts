@@ -58,11 +58,13 @@ export default async (
 
   const { width, height } = await selectMonitorSize(monitorSize)
 
-  const browser = await puppeteer.launch({
-    args: chrome.args,
-    executablePath: await chrome.executablePath,
-    headless: chrome.headless
-  })
+  const browser = dev
+    ? await localPuppeteer.launch()
+    : await puppeteer.launch({
+        args: chrome.args,
+        executablePath: await chrome.executablePath,
+        headless: chrome.headless
+      })
   const page = await browser.newPage()
 
   await Promise.all([
@@ -77,6 +79,8 @@ export default async (
         waitUntil: 'load',
         timeout: 0
       })
+      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+      // @ts-ignore
       .catch(() => console.log('timeout exceed.'))
   ])
 
