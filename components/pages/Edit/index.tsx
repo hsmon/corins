@@ -155,7 +155,7 @@ const View: React.FC<Props> = ({
     }
   }
 
-  const handleMonitorSize: (monitorSize: 'PC' | 'TB' | 'SP') => number = (
+  const handleMonitorSize: (monitorSize: MonitorSizeKey) => number = (
     monitorSize = 'PC'
   ) => {
     switch (monitorSize) {
