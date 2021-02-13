@@ -7,6 +7,7 @@ import getScreenshot, { ScreenshotAllType } from '~/pages/api/screenshot'
 
 import Retry from '~/components/organisms/Retry'
 import Edit from '~/components/pages/Edit'
+import { MonitorSizeKey } from '~/assets/monitorSize'
 
 // ===============================
 // @Types
@@ -17,7 +18,7 @@ interface Props {
   screenshot: string
   screenshotWidth: number
   screenshotHeight: number
-  monitorSize?: string
+  monitorSize: MonitorSizeKey
   error?: string | undefined
 }
 
@@ -54,7 +55,7 @@ View.propTypes = {
   screenshot: PropTypes.string.isRequired,
   screenshotWidth: PropTypes.number.isRequired,
   screenshotHeight: PropTypes.number.isRequired,
-  monitorSize: PropTypes.string.isRequired,
+  monitorSize: PropTypes.any.isRequired,
   error: PropTypes.string.isRequired
 }
 
@@ -73,7 +74,7 @@ export const getServerSideProps: GetServerSideProps<ScreenshotAllType> = async (
     src as string,
     username as string,
     password as string,
-    monitorSize as string
+    monitorSize as MonitorSizeKey
   )
 
   return {

@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux'
 import { usePreventWindowUnload } from '~/hooks/usePreventWindowUnload'
 import { PinProps } from '~/redux/pins/reducer'
 import Edit from '~/components/pages/Edit'
+import { MonitorSizeKey } from '~/assets/monitorSize'
 
 // ===============================
 // @Types
@@ -19,7 +20,7 @@ type IndexTypes = {
     imagePath: string
     imageWidth: number
     imageHeight: number
-    monitorSize: string
+    monitorSize: MonitorSizeKey
   }
   pin: {
     pins: PinProps[]
@@ -38,7 +39,7 @@ const urlSelector: ({
   imagePath: string
   imageWidth: number
   imageHeight: number
-  monitorSize: string
+  monitorSize: MonitorSizeKey
   pins: PinProps[]
 } = ({
   url: { src, imagePath, imageWidth, imageHeight, monitorSize },
