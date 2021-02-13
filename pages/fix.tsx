@@ -2,9 +2,10 @@ import styled from 'styled-components'
 import PropTypes from 'prop-types'
 import { GetServerSideProps } from 'next'
 import Link from 'next/link'
-import getScreenshot from '~/pages/api/screenshot'
+import getScreenshot, { ScreenshotReturnType } from '~/pages/api/screenshot'
 import postStatus from '~/pages/api/url/post'
 import Retry from '~/components/organisms/Retry'
+import { MonitorSizeKey } from '~/assets/monitorSize'
 
 // ===============================
 // @Types
@@ -72,15 +73,15 @@ export const getServerSideProps: GetServerSideProps<Props> = async ({
     (query.imageHeight as unknown) as number,
     query.username as string,
     query.password as string,
-    query.monitorSize as string,
+    query.monitorSize as MonitorSizeKey,
     query.pins as string
   ]
-  const { screenshot } = await getScreenshot(
+  const { screenshot } = (await getScreenshot(
     src,
     username,
     password,
     monitorSize
-  )
+  )) as ScreenshotReturnType
 
   const result = await postStatus({
     imagePath: screenshot as string,

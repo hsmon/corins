@@ -2,7 +2,7 @@ import puppeteer from 'puppeteer-core'
 import localPuppeteer from 'puppeteer'
 import chrome from 'chrome-aws-lambda'
 import { imageSize } from 'image-size'
-import monitorSize from '~/assets/monitorSize'
+import monitorSize, { MonitorSizeKey } from '~/assets/monitorSize'
 
 const { PC, TB, SP } = monitorSize
 const dev = process.env.NODE_ENV !== 'production'
@@ -19,17 +19,31 @@ export type ScreenshotErrorType = {
   error?: string | undefined | null
 }
 
-type ReturnType = {
-  screenshot?: string
-  screenshotWidth?: number
-  screenshotHeight?: number
-  error?: 'error'
+export type ScreenshotReturnType = {
+  screenshot: string
+  screenshotWidth: number
+  screenshotHeight: number
+  error: 'error' | null
 }
 
-export type ScreenshotAllType = ScreenshotType | ScreenshotErrorType
+export interface ScreenshotInterface {
+  src: string
+  username: string
+  password: string
+  monitorSize: MonitorSizeKey
+}
+
+export type ScreenshotProps = (
+  src: string,
+  username: string,
+  password: string,
+  monitorSize: MonitorSizeKey
+) => Promise<Partial<ScreenshotReturnType> | undefined>
+
+export type ScreenshotAllType = ScreenshotInterface | ScreenshotErrorType
 
 const selectMonitorSize: (
-  monitorSize: string
+  monitorSize: MonitorSizeKey
 ) => {
   width: number
   height: number
@@ -46,58 +60,62 @@ const selectMonitorSize: (
   }
 }
 
-export default async (
-  src: string,
-  username: string,
-  password: string,
-  monitorSize: string
-): Promise<ReturnType> => {
+const screenshot: ScreenshotProps = async (
+  src,
+  username,
+  password,
+  monitorSize
+) => {
   if (!src) {
     return { error: 'error' }
   }
 
-  const { width, height } = await selectMonitorSize(monitorSize)
+  const { width, height } = selectMonitorSize(monitorSize)
 
-  const browser = dev
-    ? await localPuppeteer.launch()
-    : await puppeteer.launch({
-        args: chrome.args,
-        executablePath: await chrome.executablePath,
-        headless: chrome.headless
-      })
-  const page = await browser.newPage()
+  try {
+    const browser = dev
+      ? await localPuppeteer.launch()
+      : await puppeteer.launch({
+          args: chrome.args,
+          executablePath: await chrome.executablePath,
+          headless: chrome.headless
+        })
+    const page = await browser.newPage()
 
-  await Promise.all([
-    page.authenticate({
-      username,
-      password
-    }),
-    page.setViewport({ width, height }),
-    page.goto(src),
-    page
-      .waitForNavigation({
+    await Promise.allSettled([
+      page.authenticate({
+        username,
+        password
+      }),
+      page.setViewport({ width, height }),
+      page.goto(src),
+      page.waitForNavigation({
         waitUntil: 'load',
         timeout: 0
       })
-      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-      // @ts-ignore
-      .catch(() => console.log('timeout exceed.'))
-  ])
+    ]).catch(() => new Error('screenshot　失敗'))
 
-  let screenshot: Buffer | string = await page.screenshot({
-    fullPage: true
-  })
-  await browser.close()
+    let screenshot: Buffer | string = await page.screenshot({
+      fullPage: true
+    })
+    await browser.close()
 
-  const dimensions = await imageSize(screenshot)
-  const screenshotWidth = dimensions.width
-  const screenshotHeight = dimensions.height
+    const dimensions = imageSize(screenshot)
+    const screenshotWidth = Number(dimensions.width)
+    const screenshotHeight = Number(dimensions.height)
 
-  screenshot = Buffer.from(screenshot).toString('base64')
+    screenshot = Buffer.from(screenshot).toString('base64')
 
-  return {
-    screenshot,
-    screenshotWidth,
-    screenshotHeight
+    return {
+      screenshot,
+      screenshotWidth,
+      screenshotHeight
+    }
+  } catch (error) {
+    console.error(error)
+  } finally {
+    console.log('done')
   }
 }
+
+export default screenshot
