@@ -10,7 +10,7 @@ import Retry from '~/components/organisms/Retry'
 import Dialog from '~/components/organisms/Dialog'
 import texts from '~/assets/text'
 import { useRouter } from 'next/router'
-import monitorSize from '~/assets/monitorSize'
+import monitorSize, { MonitorSizeKey } from '~/assets/monitorSize'
 
 const { PC, TB, SP } = monitorSize
 
@@ -22,7 +22,7 @@ interface Props {
   screenshot: string
   screenshotWidth: number
   screenshotHeight: number
-  monitorSize?: string
+  monitorSize: MonitorSizeKey
   pins?: PinProps[]
 }
 
@@ -155,7 +155,7 @@ const View: React.FC<Props> = ({
     }
   }
 
-  const handleMonitorSize: (monitorSize: string) => number = (
+  const handleMonitorSize: (monitorSize: 'PC' | 'TB' | 'SP') => number = (
     monitorSize = 'PC'
   ) => {
     switch (monitorSize) {
@@ -175,7 +175,7 @@ const View: React.FC<Props> = ({
       <div
         id="edit"
         style={{
-          maxWidth: handleMonitorSize(monitorSize as string),
+          maxWidth: handleMonitorSize(monitorSize),
           margin: '0 auto'
         }}
       >
@@ -301,7 +301,7 @@ View.propTypes = {
   screenshotWidth: PropTypes.number.isRequired,
   screenshotHeight: PropTypes.number.isRequired,
   pins: PropTypes.array.isRequired,
-  monitorSize: PropTypes.string.isRequired
+  monitorSize: PropTypes.any.isRequired
 }
 
 // ===============================

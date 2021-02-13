@@ -14,4 +14,5 @@ const monitorSize = {
 }
 
 export type MonitorSizeType = typeof monitorSize
+export type MonitorSizeKey = keyof MonitorSizeType
 export default monitorSize
