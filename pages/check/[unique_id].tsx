@@ -10,7 +10,9 @@ import Retry from '~/components/organisms/Retry'
 import getDBStatus from '~/pages/api/url/get'
 import getUniqueIdStatus from '~/pages/api/check/[unique_id]'
 import { useRouter } from 'next/router'
-import AdSense from '~/components/molecules/AdSense'
+// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+// @ts-ignore
+import AdSense from 'react-adsense'
 
 // ===============================
 // @Types
@@ -146,7 +148,7 @@ const View: React.FC<Props> = ({ className, url, error }) => {
       <div
         style={{ display: 'flex', justifyContent: 'center', margin: '2em 0' }}
       >
-        <AdSense />
+        <AdSense.Google client="ca-pub-2229321775479825" slot="2346491777" />
       </div>
     </div>
   )
