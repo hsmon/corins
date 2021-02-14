@@ -1,7 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
 import { PinProps } from '~/redux/pins/reducer'
-import PropTypes from 'prop-types'
 import { useDispatch } from 'react-redux'
 import { addUrlImage } from '~/redux/urls/actions'
 import { addPinStateValue } from '~/redux/pins/actions'
@@ -293,15 +292,6 @@ const View: React.FC<Props> = ({
       )}
     </form>
   )
-}
-
-View.propTypes = {
-  className: PropTypes.string.isRequired,
-  screenshot: PropTypes.string.isRequired,
-  screenshotWidth: PropTypes.number.isRequired,
-  screenshotHeight: PropTypes.number.isRequired,
-  pins: PropTypes.array.isRequired,
-  monitorSize: PropTypes.any.isRequired
 }
 
 // ===============================

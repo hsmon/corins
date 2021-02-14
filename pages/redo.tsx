@@ -1,6 +1,5 @@
 import React from 'react'
 import styled from 'styled-components'
-import PropTypes from 'prop-types'
 import { useSelector } from 'react-redux'
 import { usePreventWindowUnload } from '~/hooks/usePreventWindowUnload'
 import { PinProps } from '~/redux/pins/reducer'
@@ -75,10 +74,6 @@ const View: React.FC<Props> = ({ className }) => {
       />
     </div>
   )
-}
-
-View.propTypes = {
-  className: PropTypes.string.isRequired
 }
 
 // ===============================

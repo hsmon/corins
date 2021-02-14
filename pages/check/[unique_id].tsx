@@ -5,7 +5,6 @@ import { PinProps } from '~/redux/pins/reducer'
 import React from 'react'
 import Toggle from '~/components/molecules/Toggle'
 import Board from '~/components/molecules/Board'
-import PropTypes from 'prop-types'
 import { Url } from '~/types/mysql'
 import Retry from '~/components/organisms/Retry'
 import getDBStatus from '~/pages/api/url/get'
@@ -176,12 +175,6 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
       }
     }
   }
-}
-
-View.propTypes = {
-  className: PropTypes.string.isRequired,
-  url: PropTypes.array.isRequired,
-  error: PropTypes.any.isRequired
 }
 
 // ===============================

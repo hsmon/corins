@@ -1,5 +1,4 @@
 import styled from 'styled-components'
-import PropTypes from 'prop-types'
 import React from 'react'
 
 type Props = {
@@ -30,10 +29,6 @@ const View: React.FC<Props> = ({ className }) => {
       data-full-width-responsive="true"
     />
   )
-}
-
-View.propTypes = {
-  className: PropTypes.string.isRequired
 }
 
 export default styled(View)`

@@ -1,6 +1,5 @@
 import React from 'react'
 import styled from 'styled-components'
-import PropTypes from 'prop-types'
 
 // ===============================
 // @Types
@@ -26,12 +25,6 @@ const View: React.FC<Props> = ({ className, onClickClose, alert }) => {
       </div>
     </div>
   )
-}
-
-View.propTypes = {
-  className: PropTypes.string.isRequired,
-  onClickClose: PropTypes.func.isRequired,
-  alert: PropTypes.string.isRequired
 }
 
 // ===============================

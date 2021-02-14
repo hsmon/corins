@@ -1,6 +1,5 @@
 import React from 'react'
 import styled from 'styled-components'
-import PropTypes from 'prop-types'
 
 // ===============================
 // @Types
@@ -20,10 +19,6 @@ const View: React.FC<Props> = ({ className }) => {
       <p>ページが見つかりません</p>
     </div>
   )
-}
-
-View.propTypes = {
-  className: PropTypes.string.isRequired
 }
 
 // ===============================
