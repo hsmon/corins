@@ -71,6 +71,7 @@ const screenshot: ScreenshotProps = async (
   }
 
   const { width, height } = selectMonitorSize(monitorSize)
+  let data
 
   try {
     const browser = dev
@@ -106,16 +107,21 @@ const screenshot: ScreenshotProps = async (
 
     screenshot = Buffer.from(screenshot).toString('base64')
 
-    return {
+    data = {
       screenshot,
       screenshotWidth,
       screenshotHeight
     }
   } catch (error) {
     console.error(error)
+    data = {
+      error
+    }
   } finally {
     console.log('done')
   }
+
+  return data
 }
 
 export default screenshot
