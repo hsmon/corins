@@ -23,7 +23,7 @@ module.exports = {
   rules: {
     'react/react-in-jsx-scope': 'off',
     'no-extra-semi': 'warn',
-    'react/prop-types': [2, { ignore: ['children'] }],
+    'react/prop-types': 'off',
     '@typescript-eslint/explicit-function-return-type': [
       'error',
       {

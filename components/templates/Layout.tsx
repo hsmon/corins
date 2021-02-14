@@ -1,6 +1,5 @@
 import Header from '~/components/organisms/Header'
 import styled from 'styled-components'
-import PropTypes from 'prop-types'
 
 interface Props {
   className?: string
@@ -13,10 +12,6 @@ const View: React.FC<Props> = ({ className, children }) => {
       <div className={className}>{children}</div>
     </>
   )
-}
-
-View.propTypes = {
-  className: PropTypes.string.isRequired
 }
 
 export default styled(View)`

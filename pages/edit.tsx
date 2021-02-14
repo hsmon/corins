@@ -1,6 +1,5 @@
 import React from 'react'
 import styled from 'styled-components'
-import PropTypes from 'prop-types'
 import { GetServerSideProps } from 'next'
 
 import getScreenshot, {
@@ -52,16 +51,6 @@ const View: React.FC<Props> = ({
       />
     </div>
   )
-}
-
-View.propTypes = {
-  className: PropTypes.string.isRequired,
-  src: PropTypes.string.isRequired,
-  screenshot: PropTypes.string.isRequired,
-  screenshotWidth: PropTypes.number.isRequired,
-  screenshotHeight: PropTypes.number.isRequired,
-  monitorSize: PropTypes.any.isRequired,
-  error: PropTypes.string.isRequired
 }
 
 export const getServerSideProps: GetServerSideProps<ScreenshotAllType> = async ({

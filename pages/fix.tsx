@@ -1,5 +1,4 @@
 import styled from 'styled-components'
-import PropTypes from 'prop-types'
 import { GetServerSideProps } from 'next'
 import Link from 'next/link'
 import getScreenshot, { ScreenshotReturnType } from '~/pages/api/screenshot'
@@ -49,11 +48,6 @@ const View: React.FC<Props> = ({ className, uniqueId }) => {
       </p>
     </div>
   )
-}
-
-View.propTypes = {
-  className: PropTypes.string.isRequired,
-  uniqueId: PropTypes.string.isRequired
 }
 
 export const getServerSideProps: GetServerSideProps<Props> = async ({

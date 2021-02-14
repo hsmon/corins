@@ -1,6 +1,5 @@
 import React from 'react'
 import styled from 'styled-components'
-import PropTypes from 'prop-types'
 
 // ===============================
 // @Types
@@ -25,12 +24,6 @@ const View: React.FC<Props> = ({ className, text, open = false }) => {
       <dd>{text}</dd>
     </dl>
   )
-}
-
-View.propTypes = {
-  className: PropTypes.string.isRequired,
-  text: PropTypes.string.isRequired,
-  open: PropTypes.bool.isRequired
 }
 
 // ===============================

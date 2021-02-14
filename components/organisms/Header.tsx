@@ -3,7 +3,6 @@ import styled from 'styled-components'
 import Link from 'next/link'
 import { useDispatch } from 'react-redux'
 import { removeUrlStateValue } from '~/redux/urls/actions'
-import PropTypes from 'prop-types'
 
 import texts from '~/assets/text/index'
 
@@ -24,10 +23,6 @@ const View: React.FC<Props> = ({ className }) => {
       </Link>
     </header>
   )
-}
-
-View.propTypes = {
-  className: PropTypes.string.isRequired
 }
 
 export default styled(View)`

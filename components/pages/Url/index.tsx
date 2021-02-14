@@ -1,94 +1,80 @@
 import React from 'react'
 import styled from 'styled-components'
-import PropTypes from 'prop-types'
 import { useDispatch } from 'react-redux'
 import { addUrlStateValue } from '~/redux/urls/actions'
 import { AddUrlProps } from '~/redux/urls/reducer'
+import { useForm } from 'react-hook-form'
 
 interface Props {
   className?: string
 }
 
 const View: React.FC<Props> = (props) => {
-  const [src, setUrl] = React.useState('')
-  const [username, setUsername] = React.useState('')
-  const [password, setPassword] = React.useState('')
   const [checked, setChecked] = React.useState(false)
-  const [monitorSize, setMonitorSize] = React.useState('PC')
   const dispatch = useDispatch()
-
-  const handleChange: ({
-    target
-  }: React.ChangeEvent<HTMLInputElement>) => void = React.useCallback(
-    ({ target }) => {
-      switch (target.name) {
-        case 'url':
-          setUrl(target.value)
-          break
-        case 'username':
-          setUsername(target.value)
-          break
-        case 'password':
-          setPassword(target.value)
-          break
-        case 'monitor':
-          setMonitorSize(target.value)
-          break
-      }
-    },
-    []
-  )
-
+  const { register, handleSubmit, errors } = useForm<AddUrlProps>({
+    shouldFocusError: false
+  })
   const handleCheck: () => void = () => setChecked(!checked)
-
-  const handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void = (e) => {
-    e.preventDefault()
-    const urlStatus: AddUrlProps = checked
-      ? { src, monitorSize, username, password }
-      : { src, monitorSize }
-    dispatch(addUrlStateValue(urlStatus))
-  }
+  const onSubmit: (data: AddUrlProps) => void = (data) =>
+    dispatch(addUrlStateValue(data))
 
   return (
-    <form className={props.className} method="post" onSubmit={handleSubmit}>
-      <input
-        type="url"
-        name="url"
-        value={src}
-        onChange={handleChange}
-        autoFocus={true}
-      />
+    <form
+      className={props.className}
+      method="post"
+      onSubmit={handleSubmit(onSubmit)}
+    >
+      <label htmlFor="url">
+        <input
+          type="url"
+          placeholder="https://example.com"
+          name="src"
+          aria-invalid={errors.src ? 'true' : 'false'}
+          ref={register({
+            required: 'URLの入力は必須です'
+          })}
+          autoFocus={true}
+          id="url"
+        />
+        {!!errors.src && <p role="alert">{errors.src.message}</p>}
+      </label>
+
       <p className="radio">
         <span>サイズを選択してください</span>
         <input
+          name="monitorSize"
           type="radio"
-          name="monitor"
           value="PC"
+          ref={register}
           id="radio_1"
-          onChange={handleChange}
+          defaultChecked={true}
+          aria-invalid={errors.monitorSize ? 'true' : 'false'}
         />
         <label htmlFor="radio_1">PC（パソコン）</label>
         <input
+          name="monitorSize"
           type="radio"
-          name="monitor"
           value="TB"
+          ref={register}
           id="radio_2"
-          onChange={handleChange}
+          aria-invalid={errors.monitorSize ? 'true' : 'false'}
         />
         <label htmlFor="radio_2">TB（タブレット）</label>
         <input
+          name="monitorSize"
           type="radio"
-          name="monitor"
           value="SP"
+          ref={register}
           id="radio_3"
-          onChange={handleChange}
+          aria-invalid={errors.monitorSize ? 'true' : 'false'}
         />
         <label htmlFor="radio_3">SP（スマートフォン）</label>
       </p>
       <p className="checkbox">
         <input
           type="checkbox"
-          checked={checked}
+          defaultChecked={checked}
           onChange={handleCheck}
           id="check"
         />
@@ -101,20 +87,20 @@ const View: React.FC<Props> = (props) => {
               <span>ユーザー名</span>
               <input
                 type="text"
-                className="sub"
+                placeholder="username"
                 name="username"
-                value={username}
-                onChange={handleChange}
+                ref={register}
+                className="sub"
               />
             </p>
             <p className="checkbox__element">
               <span>パスワード</span>
               <input
                 type="password"
-                className="sub"
+                placeholder="password"
                 name="password"
-                value={password}
-                onChange={handleChange}
+                ref={register}
+                className="sub"
               />
             </p>
           </>
@@ -123,10 +109,6 @@ const View: React.FC<Props> = (props) => {
       <input type="submit" value="このURLで指示する" />
     </form>
   )
-}
-
-View.propTypes = {
-  className: PropTypes.string.isRequired
 }
 
 export default styled(View)`
@@ -150,6 +132,12 @@ export default styled(View)`
         background: ${({ theme }) => theme.colors.blue4};
       }
     }
+  }
+  p[role='alert'] {
+    width: 70%;
+    display: block;
+    margin: 0 auto;
+    color: ${({ theme }) => theme.colors.red};
   }
   input {
     &[type='url'] {

@@ -1,6 +1,5 @@
 import React from 'react'
 import styled from 'styled-components'
-import PropTypes from 'prop-types'
 import { useRouter } from 'next/router'
 
 import UrlForm from '~/components/pages/Url'
@@ -64,10 +63,6 @@ const View: React.FC<Props> = ({ className }) => {
       <UrlForm />
     </div>
   )
-}
-
-View.propTypes = {
-  className: PropTypes.string.isRequired
 }
 
 // ===============================
