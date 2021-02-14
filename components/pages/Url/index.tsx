@@ -28,7 +28,6 @@ const View: React.FC<Props> = (props) => {
       <label htmlFor="url">
         <input
           type="url"
-          placeholder="https://example.com"
           name="src"
           aria-invalid={errors.src ? 'true' : 'false'}
           ref={register({
