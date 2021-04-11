@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-empty-interface */
 const variables = {
   colors: {
     base: '#e8eaf6',
@@ -36,7 +37,11 @@ const variables = {
     medium: '768px',
     large: '950px'
   }
-}
+} as const
 
 export type ThemeType = typeof variables
 export default variables
+
+declare module 'styled-components' {
+  export interface DefaultTheme extends ThemeType {}
+}
