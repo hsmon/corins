@@ -1,0 +1,30 @@
+name: Test Coverage
+
+on:
+  push:
+    branches:
+      - master
+      - develop
+
+jobs:
+  Test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - name: yarn install
+        run: yarn install
+      - name: eslint review
+        uses: reviewdog/action-eslint@v1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          reporter: github-pr-review
+          eslint_flags: './**/*.{tsx,ts,js}'
+      - name: Run eslint
+        run: yarn lint
+      - name: Run Test
+        run: yarn test:coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v1.2.1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
