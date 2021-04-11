@@ -1,3 +1,5 @@
+[![codecov](https://codecov.io/gh/hsmon/corins/branch/master/graph/badge.svg?token=XUR4R9HWF8)](https://codecov.io/gh/hsmon/corins)
+
 # 🚤 corins
 
 corinsはWeb製作者向けに、フィードバックを行えるツールです。  
@@ -39,10 +41,4 @@ corinsはWeb製作者向けに、フィードバックを行えるツールで�
 - yarn
 - ESLint
 - Prettier
-
-
-## TODO
-
-- [x] basic認証対応
-- [ ] SPサイズは利用不可に
-- [ ] OGP対応
+- Jest(React Testing Library)
