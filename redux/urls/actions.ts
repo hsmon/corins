@@ -28,7 +28,7 @@ export const removeUrlStateValue: (payload: RemoveUrlProps) => Props = (
 })
 
 export const addUrlImage: (payload: AddUrlImageProps) => Props = (payload) => ({
-  type: ADD_URL_STATE,
+  type: ADD_URL_IMAGE,
   payload
 })
 

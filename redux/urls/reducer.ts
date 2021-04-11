@@ -1,3 +1,4 @@
+import { MonitorSizeKey } from '~/assets/monitorSize'
 import {
   ADD_URL_STATE,
   REMOVE_URL_STATE,
@@ -9,7 +10,7 @@ export type AddUrlProps = {
   src: string
   username?: string | null
   password?: string | null
-  monitorSize?: string | null
+  monitorSize?: MonitorSizeKey
 }
 
 export type RemoveUrlProps = {
