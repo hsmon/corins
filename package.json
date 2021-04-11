@@ -8,7 +8,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint --ext .ts,.tsx --ignore-path .eslintignore . --fix",
-    "test": "jest --env=jsdom --verbose"
+    "test": "jest --env=jsdom --verbose",
+    "test:coverage": "yarn test --coverage --watchAll=false"
   },
   "husky": {
     "hooks": {
