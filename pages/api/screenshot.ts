@@ -61,6 +61,16 @@ const selectMonitorSize: (
   }
 }
 
+const argsOption = [
+  '--disable-gpu',
+  '--disable-dev-shm-usage',
+  '--disable-setuid-sandbox',
+  '--no-first-run',
+  '--no-sandbox',
+  '--no-zygote',
+  '--single-process'
+]
+
 const screenshot: ScreenshotProps = async (
   src,
   username,
@@ -77,9 +87,11 @@ const screenshot: ScreenshotProps = async (
   try {
     await chrome.font(FONT_PATH)
     const browser = dev
-      ? await localPuppeteer.launch()
+      ? await localPuppeteer.launch({
+          args: argsOption
+        })
       : await puppeteer.launch({
-          args: chrome.args,
+          args: [...chrome.args, ...argsOption],
           executablePath: await chrome.executablePath,
           headless: chrome.headless
         })
