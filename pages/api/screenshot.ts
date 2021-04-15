@@ -6,6 +6,7 @@ import monitorSize, { MonitorSizeKey } from '~/assets/monitorSize'
 
 const { PC, TB, SP } = monitorSize
 const dev = process.env.NODE_ENV !== 'production'
+const FONT_PATH = process.env.FONT_PATH
 
 export type ScreenshotType = {
   screenshot: Buffer | string | undefined | null
@@ -74,6 +75,7 @@ const screenshot: ScreenshotProps = async (
   let data
 
   try {
+    await chrome.font(FONT_PATH)
     const browser = dev
       ? await localPuppeteer.launch()
       : await puppeteer.launch({
@@ -82,6 +84,7 @@ const screenshot: ScreenshotProps = async (
           headless: chrome.headless
         })
     const page = await browser.newPage()
+    await page.emulateMediaType('screen')
 
     await Promise.allSettled([
       page.authenticate({
