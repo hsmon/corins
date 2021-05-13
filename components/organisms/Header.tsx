@@ -19,7 +19,9 @@ const View: React.FC<Props> = ({ className }) => {
   return (
     <header className={className}>
       <Link href="/">
-        <a onClick={resetUrlStatus}>{texts.title}</a>
+        <a onClick={resetUrlStatus}>
+          {texts.icon} {texts.title}
+        </a>
       </Link>
     </header>
   )
