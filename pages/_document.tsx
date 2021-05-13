@@ -44,7 +44,10 @@ export default class MyDocument extends Document<Props> {
         <Head>
           <meta charSet="UTF-8" />
           <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
-          <link rel="icon" href="/favicon.ico" />
+          <link
+            rel="icon"
+            href="data:image/svg+xml, <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text x='50%' y='50%' style='dominant-baseline:central;text-anchor:middle;font-size:90px;'>🚤 </text></svg>"
+          />
           {this.props.styleTags}
           <script
             async
