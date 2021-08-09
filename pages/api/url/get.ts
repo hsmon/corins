@@ -1,13 +1,16 @@
-import DB from '~/lib/db'
-import escape from 'sql-template-strings'
+import { PSDB } from 'planetscale-node'
+const conn = new PSDB('main')
 
 export default async (): Promise<string> => {
   try {
-    const url = await DB.query(escape`
+    const [rows] = await conn.query(
+      `
         SELECT *
         FROM url;
-      `)
-    return JSON.stringify(url)
+      `,
+      ''
+    )
+    return JSON.stringify(rows)
   } catch (error) {
     console.error(error)
     return error

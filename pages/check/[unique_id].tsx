@@ -145,11 +145,11 @@ const View: React.FC<Props> = ({ className, url, error }) => {
           })}
         </ol>
       </div>
-      <div
+      {/* <div
         style={{ display: 'flex', justifyContent: 'center', margin: '2em 0' }}
       >
         <AdSense.Google client="ca-pub-2229321775479825" slot="2346491777" />
-      </div>
+      </div> */}
     </div>
   )
 }

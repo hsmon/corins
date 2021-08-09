@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/camelcase */
-import DB from '~/lib/db'
-import escape from 'sql-template-strings'
+import { PSDB } from 'planetscale-node'
+const conn = new PSDB('main')
 
 export default async ({
   unique_id,
@@ -12,15 +12,18 @@ export default async ({
   if (!unique_id || error) return 'error'
   try {
     if (unique_id && !error) {
-      const url = await DB.query(escape`
+      const [rows] = await conn.execute(
+        `
         SELECT *
           FROM url
           JOIN pin
           ON url.pin_id = pin.id
-          WHERE url.unique_id = ${unique_id}
+          WHERE url.unique_id = ?
         ;
-      `)
-      return JSON.stringify(url)
+      `,
+        [unique_id]
+      )
+      return JSON.stringify(rows)
     } else {
       return 'error'
     }
