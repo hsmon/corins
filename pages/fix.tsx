@@ -35,12 +35,14 @@ const View: React.FC<Props> = ({ className, uniqueId }) => {
         </span>
       </p>
       <p className="fix__text">共有リンクはこちら</p>
-      <input
-        className="fix__input"
-        type="text"
-        value={`${window.location.origin}/check/${uniqueId}`}
-        onFocus={handleFocus}
-      />
+      {window && (
+        <input
+          className="fix__input"
+          type="text"
+          value={`${window.location.origin}/check/${uniqueId}`}
+          onFocus={handleFocus}
+        />
+      )}
       <p style={{ textAlign: 'center' }}>
         <Link href="check/[unique_id]" as={`check/${uniqueId}`}>
           <a className="fix__button">フィードバックを確認する</a>
@@ -83,8 +85,8 @@ export const getServerSideProps: GetServerSideProps<Props> = async ({
     imageHeight,
     pins
   })
+  console.log({ result })
   const { uniqueId } = result as { uniqueId: string }
-
   return {
     props: {
       uniqueId

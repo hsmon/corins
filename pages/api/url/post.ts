@@ -1,7 +1,8 @@
-import DB from '~/lib/db'
-import escape from 'sql-template-strings'
 import Hashids from 'hashids/cjs'
 import uploadS3 from '~/lib/upload'
+
+import { PSDB } from 'planetscale-node'
+const conn = new PSDB('main')
 
 export type PostProps = {
   imagePath: string
@@ -35,22 +36,26 @@ export default async ({
 
       await uploadS3(uniqueId, imagePath)
 
-      await DB.insert(escape`
-        INSERT INTO pin(src) VALUES(${JSON.stringify(pins)})
-        ;
-      `)
-      await DB.insert(escape`
+      await conn.execute(
+        `
+        INSERT INTO pin(src) VALUES(?);
+      `,
+        [JSON.stringify(pins)]
+      )
+      await conn.execute(
+        `
         INSERT INTO
-          url(image_width, image_height, pin_id, unique_id, datetime)
+          url(image_width, image_height, pin_id, unique_id)
           SELECT
-            ${imageWidth},
-            ${imageHeight},
+            ?,
+            ?,
             COUNT(pin.id + 1),
-            ${uniqueId},
-            CURRENT_TIMESTAMP
+            ?
           FROM pin
         ;
-      `)
+      `,
+        [imageWidth, imageHeight, uniqueId]
+      )
       return { uniqueId }
     }
   } catch (error) {
