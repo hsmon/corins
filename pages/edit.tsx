@@ -5,8 +5,7 @@ import { GetServerSideProps } from 'next'
 import getScreenshot, {
   ScreenshotAllType,
   ScreenshotErrorType,
-  ScreenshotInterface,
-  ScreenshotReturnType
+  ScreenshotInterface
 } from '~/pages/api/screenshot'
 
 import Retry from '~/components/organisms/Retry'
@@ -38,7 +37,7 @@ const View: React.FC<Props> = ({
   monitorSize,
   error
 }) => {
-  if (error) return <Retry />
+  if (error || !screenshot) return <Retry />
 
   return (
     <div className={className}>
@@ -80,20 +79,12 @@ export const getServerSideProps: GetServerSideProps<ScreenshotAllType> = async (
     }
   }
 
-  const {
-    screenshot,
-    screenshotWidth,
-    screenshotHeight
-  } = (await getScreenshot(
-    src,
-    username,
-    password,
-    monitorSize
-  )) as ScreenshotReturnType
+  const chunks = await getScreenshot(src, username, password, monitorSize)
+  const { screenshotWidth, screenshotHeight } = chunks
 
   return {
     props: {
-      screenshot,
+      screenshot: chunks?.screenshot,
       screenshotWidth,
       screenshotHeight,
       monitorSize

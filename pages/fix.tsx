@@ -11,7 +11,7 @@ import { MonitorSizeKey } from '~/assets/monitorSize'
 // ===============================
 interface Props {
   className?: string
-  uniqueId: string
+  uniqueId: string | null
 }
 
 // ===============================
@@ -85,8 +85,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async ({
     imageHeight,
     pins
   })
-  console.log({ result })
-  const { uniqueId } = result as { uniqueId: string }
+  const uniqueId = result?.uniqueId ?? null
   return {
     props: {
       uniqueId
