@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import { GetServerSideProps } from 'next'
 import Link from 'next/link'
-import getScreenshot, { ScreenshotReturnType } from '~/pages/api/screenshot'
+import getScreenshot, { ScreenshotReturnType } from '~/lib/screenshot'
 import postStatus from '~/pages/api/url/post'
 import Retry from '~/components/organisms/Retry'
 import { MonitorSizeKey } from '~/assets/monitorSize'
@@ -55,23 +55,16 @@ const View: React.FC<Props> = ({ className, uniqueId }) => {
 export const getServerSideProps: GetServerSideProps<Props> = async ({
   query
 }) => {
-  const [
-    src,
-    imageWidth,
-    imageHeight,
-    username,
-    password,
-    monitorSize,
-    pins
-  ] = [
-    query.src as string,
-    (query.imageWidth as unknown) as number,
-    (query.imageHeight as unknown) as number,
-    query.username as string,
-    query.password as string,
-    query.monitorSize as MonitorSizeKey,
-    query.pins as string
-  ]
+  const [src, imageWidth, imageHeight, username, password, monitorSize, pins] =
+    [
+      query.src as string,
+      query.imageWidth as unknown as number,
+      query.imageHeight as unknown as number,
+      query.username as string,
+      query.password as string,
+      query.monitorSize as MonitorSizeKey,
+      query.pins as string
+    ]
   const { screenshot } = (await getScreenshot(
     src,
     username,

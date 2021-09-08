@@ -7,8 +7,10 @@ module.exports = {
     'standard',
     'eslint:recommended',
     'plugin:react/recommended',
-    'plugin:@typescript-eslint/eslint-recommended',
-    'plugin:@typescript-eslint/recommended'
+    // 'plugin:@typescript-eslint/eslint-recommended',
+    'plugin:@typescript-eslint/recommended',
+    'prettier',
+    'plugin:@next/next/recommended'
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
@@ -44,7 +46,24 @@ module.exports = {
       }
     ],
     'space-before-function-paren': 0,
-    indent: [0, 'tab']
+    indent: [0, 'tab'],
+    'no-use-before-define': 'off',
+    '@typescript-eslint/no-use-before-define': ['error'],
+    '@typescript-eslint/naming-convention': [
+      'error',
+      {
+        selector: [
+          'variable',
+          'function',
+          'interface',
+          'typeAlias',
+          'parameter'
+        ],
+        format: ['camelCase', 'UPPER_CASE', 'snake_case', 'PascalCase'],
+        leadingUnderscore: 'allow',
+        trailingUnderscore: 'allow'
+      }
+    ]
   },
   globals: {
     React: 'writable'

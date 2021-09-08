@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/camelcase */
+/* eslint-disable camelcase */
 import styled from 'styled-components'
 import { GetStaticProps, GetStaticPaths } from 'next'
 import { PinProps } from '~/redux/pins/reducer'
@@ -10,9 +10,6 @@ import Retry from '~/components/organisms/Retry'
 import getDBStatus from '~/pages/api/url/get'
 import getUniqueIdStatus from '~/pages/api/check/[unique_id]'
 import { useRouter } from 'next/router'
-// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-// @ts-ignore
-import AdSense from 'react-adsense'
 
 // ===============================
 // @Types

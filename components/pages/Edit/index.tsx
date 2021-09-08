@@ -51,7 +51,7 @@ const View: React.FC<Props> = ({
   const dispatch = useDispatch()
 
   // ブラウザの閉じるor再読み込み時に確認
-  usePreventWindowUnload((pinArray.length as unknown) as boolean)
+  usePreventWindowUnload(pinArray.length as unknown as boolean)
 
   /**
    * Pinの追加

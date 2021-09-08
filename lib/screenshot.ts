@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import puppeteer from 'puppeteer-core'
 import localPuppeteer from 'puppeteer'
 import chrome from 'chrome-aws-lambda'
@@ -24,7 +25,6 @@ export type ScreenshotReturnType = {
   screenshot: string
   screenshotWidth: number
   screenshotHeight: number
-  error: 'error' | null
 }
 
 export interface ScreenshotInterface {
@@ -43,9 +43,7 @@ export type ScreenshotProps = (
 
 export type ScreenshotAllType = ScreenshotInterface | ScreenshotErrorType
 
-const selectMonitorSize: (
-  monitorSize: MonitorSizeKey
-) => {
+const selectMonitorSize: (monitorSize: MonitorSizeKey) => {
   width: number
   height: number
 } = (monitorSize = 'PC') => {
@@ -139,16 +137,16 @@ const screenshot: ScreenshotProps = async (
       })
     ]).catch(() => new Error('screenshot　失敗'))
 
-    let screenshot: Buffer | string = await page.screenshot({
+    let screenshot = await page.screenshot({
       fullPage: true
     })
     await browser.close()
 
-    const dimensions = imageSize(screenshot)
+    const dimensions = imageSize(screenshot as string)
     const screenshotWidth = Number(dimensions.width)
     const screenshotHeight = Number(dimensions.height)
 
-    screenshot = Buffer.from(screenshot).toString('base64')
+    screenshot = Buffer.from(screenshot as string).toString('base64')
 
     data = {
       screenshot,

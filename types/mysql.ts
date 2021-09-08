@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 export type Url = {
   id?: number
   image_width?: number
