@@ -75,9 +75,7 @@ const View: React.FC<Props> = ({ className }) => {
         <div className={className}>
           <p className="fix__title">
             登録が完了しました！
-            <span>
-              ※有効期限は登録時から7日間となります。それ以降は再び登録する必要があります。
-            </span>
+            <span>フィードバックを確認しましょう！</span>
           </p>
           <p className="fix__text">共有リンクはこちら</p>
           {window && (
