@@ -6,6 +6,7 @@ import { useRouter } from 'next/router'
 import Retry from '~/components/organisms/Retry'
 import { PinProps } from '~/redux/pins/reducer'
 import Link from 'next/link'
+import { urlSelector } from '~/lib/urlselector'
 
 // ===============================
 // @Types
@@ -13,78 +14,14 @@ import Link from 'next/link'
 interface Props {
   className?: string
 }
-type IndexTypes = {
-  url: {
-    src: string
-    imagePath: string
-    imageWidth: number
-    imageHeight: number
-    username: string
-    password: string
-    monitorSize: string
-  }
-  pin: {
-    pins: PinProps[]
-  }
-}
 
 // ===============================
 // @Component
 // ===============================
-const urlSelector: ({
-  url: {
-    src,
-    imagePath,
-    imageWidth,
-    imageHeight,
-    username,
-    password,
-    monitorSize
-  },
-  pin: { pins }
-}: IndexTypes) => {
-  src: string
-  imagePath: string
-  imageWidth: number
-  imageHeight: number
-  username: string
-  password: string
-  monitorSize: string
-  pins: PinProps[]
-} = ({
-  url: {
-    src,
-    imagePath,
-    imageWidth,
-    imageHeight,
-    username,
-    password,
-    monitorSize
-  },
-  pin: { pins }
-}) => ({
-  src,
-  imagePath,
-  imageWidth,
-  imageHeight,
-  username,
-  password,
-  monitorSize,
-  pins
-})
 
 const View: React.FC<Props> = ({ className }) => {
   const urlStatus = useSelector(urlSelector)
-  const {
-    src,
-    imagePath,
-    imageWidth,
-    imageHeight,
-    username,
-    password,
-    monitorSize,
-    pins
-  } = urlStatus
+  const { imagePath, imageWidth, imageHeight, pins } = urlStatus
   const router = useRouter()
 
   const scrollPosition = React.useCallback(
@@ -98,16 +35,7 @@ const View: React.FC<Props> = ({ className }) => {
   const toFix: () => void = async () => {
     // ページ遷移
     await router.push({
-      pathname: '/fix',
-      query: {
-        src,
-        imageWidth,
-        imageHeight,
-        username,
-        password,
-        monitorSize,
-        pins: JSON.stringify(pins)
-      }
+      pathname: '/fix'
     })
   }
 

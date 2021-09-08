@@ -1,6 +1,7 @@
+import { NextApiRequest, NextApiResponse } from 'next'
+import nextConnect from 'next-connect'
 import Hashids from 'hashids/cjs'
 import uploadS3 from '~/lib/upload'
-
 import { PSDB } from 'planetscale-node'
 const conn = new PSDB('main')
 
@@ -19,7 +20,7 @@ type ReturnType = {
 // ユニークIDの生成
 const hashids = new Hashids('', 32)
 
-export default async ({
+const handlePost = async ({
   imagePath,
   imageWidth,
   imageHeight,
@@ -40,7 +41,7 @@ export default async ({
         `
         INSERT INTO pin(src) VALUES(?);
       `,
-        [JSON.stringify(pins)]
+        [JSON.stringify(JSON.stringify(pins))]
       )
       await conn.execute(
         `
@@ -62,3 +63,16 @@ export default async ({
     if (error) return { error }
   }
 }
+
+const handler = nextConnect<NextApiRequest, NextApiResponse>().use(
+  async (req, res, next) => {
+    if (req.method === 'POST') {
+      const uniqueId = await handlePost(req.body)
+      console.log(uniqueId)
+      res.json(uniqueId)
+      next()
+    }
+  }
+)
+
+export default handler
