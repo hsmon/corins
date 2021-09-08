@@ -6,7 +6,7 @@ import getScreenshot, {
   ScreenshotAllType,
   ScreenshotErrorType,
   ScreenshotInterface
-} from '~/pages/api/screenshot'
+} from '~/lib/screenshot'
 
 import Retry from '~/components/organisms/Retry'
 import Edit from '~/components/pages/Edit'
@@ -52,45 +52,39 @@ const View: React.FC<Props> = ({
   )
 }
 
-export const getServerSideProps: GetServerSideProps<ScreenshotAllType> = async ({
-  query
-}) => {
-  if (query === undefined) {
+export const getServerSideProps: GetServerSideProps<ScreenshotAllType> =
+  async ({ query }) => {
+    if (query === undefined) {
+      return {
+        props: {
+          error: 'error'
+        }
+      }
+    }
+
+    const { src, username, password, monitorSize, error } =
+      query as unknown as ScreenshotInterface & Required<ScreenshotErrorType>
+
+    if (error || !src) {
+      return {
+        props: {
+          error: 'error'
+        }
+      }
+    }
+
+    const chunks = await getScreenshot(src, username, password, monitorSize)
+    const { screenshotWidth, screenshotHeight } = chunks
+
     return {
       props: {
-        error: 'error'
+        screenshot: chunks?.screenshot,
+        screenshotWidth,
+        screenshotHeight,
+        monitorSize
       }
     }
   }
-
-  const {
-    src,
-    username,
-    password,
-    monitorSize,
-    error
-  } = (query as unknown) as ScreenshotInterface & Required<ScreenshotErrorType>
-
-  if (error || !src) {
-    return {
-      props: {
-        error: 'error'
-      }
-    }
-  }
-
-  const chunks = await getScreenshot(src, username, password, monitorSize)
-  const { screenshotWidth, screenshotHeight } = chunks
-
-  return {
-    props: {
-      screenshot: chunks?.screenshot,
-      screenshotWidth,
-      screenshotHeight,
-      monitorSize
-    }
-  }
-}
 
 // ===============================
 // @Styled

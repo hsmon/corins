@@ -13,6 +13,7 @@ export default async (): Promise<string> => {
     return JSON.stringify(rows)
   } catch (error) {
     console.error(error)
-    return error
+    const err = new Error('this is erorr')
+    return JSON.stringify(err, Object.getOwnPropertyNames(err))
   }
 }

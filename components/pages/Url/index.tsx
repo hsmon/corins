@@ -12,7 +12,11 @@ interface Props {
 const View: React.FC<Props> = (props) => {
   const [checked, setChecked] = React.useState(false)
   const dispatch = useDispatch()
-  const { register, handleSubmit, errors } = useForm<AddUrlProps>({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors }
+  } = useForm<AddUrlProps>({
     shouldFocusError: false
   })
   const handleCheck: () => void = () => setChecked(!checked)
@@ -28,11 +32,10 @@ const View: React.FC<Props> = (props) => {
       <label htmlFor="url">
         <input
           type="url"
-          name="src"
-          aria-invalid={errors.src ? 'true' : 'false'}
-          ref={register({
+          {...register('src', {
             required: 'URLの入力は必須です'
           })}
+          aria-invalid={errors.src ? 'true' : 'false'}
           autoFocus={true}
           id="url"
         />
@@ -42,29 +45,26 @@ const View: React.FC<Props> = (props) => {
       <p className="radio">
         <span>サイズを選択してください</span>
         <input
-          name="monitorSize"
           type="radio"
+          {...register('monitorSize')}
           value="PC"
-          ref={register}
           id="radio_1"
           defaultChecked={true}
           aria-invalid={errors.monitorSize ? 'true' : 'false'}
         />
         <label htmlFor="radio_1">PC（パソコン）</label>
         <input
-          name="monitorSize"
           type="radio"
+          {...register('monitorSize')}
           value="TB"
-          ref={register}
           id="radio_2"
           aria-invalid={errors.monitorSize ? 'true' : 'false'}
         />
         <label htmlFor="radio_2">TB（タブレット）</label>
         <input
-          name="monitorSize"
           type="radio"
+          {...register('monitorSize')}
           value="SP"
-          ref={register}
           id="radio_3"
           aria-invalid={errors.monitorSize ? 'true' : 'false'}
         />
@@ -86,9 +86,8 @@ const View: React.FC<Props> = (props) => {
               <span>ユーザー名</span>
               <input
                 type="text"
+                {...register('username')}
                 placeholder="username"
-                name="username"
-                ref={register}
                 className="sub"
               />
             </p>
@@ -96,9 +95,8 @@ const View: React.FC<Props> = (props) => {
               <span>パスワード</span>
               <input
                 type="password"
+                {...register('password')}
                 placeholder="password"
-                name="password"
-                ref={register}
                 className="sub"
               />
             </p>

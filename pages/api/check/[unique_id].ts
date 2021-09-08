@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/camelcase */
+/* eslint-disable camelcase */
 import { PSDB } from 'planetscale-node'
 const conn = new PSDB('main')
 
