@@ -413,6 +413,8 @@ export default styled(View)`
       background: ${({ theme }) => theme.colors.whitesmoke};
       border-radius: 15px 0 0 15px;
       box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
+      max-height: 100vh;
+      overflow: auto;
       &:hover {
         z-index: 0;
       }
@@ -492,16 +494,19 @@ export default styled(View)`
       }
       &__wrapper {
         position: fixed;
-        top: 50vh;
-        bottom: 50vh;
+        top: 0;
+        bottom: 0;
         right: -350px;
         z-index: 2;
         width: 350px;
         display: flex;
         flex-direction: column;
         justify-content: center;
+        max-height: 100vh;
+        height: 100%;
         &.isOpen {
           right: 0;
+          overflow: auto;
           > button {
             right: 20px;
             opacity: 0;
@@ -528,7 +533,9 @@ export default styled(View)`
         > button {
           position: absolute;
           top: -20px;
+          bottom: 0;
           right: 370px;
+          margin: auto;
           z-index: 5;
           border-radius: 50%;
           background: ${({ theme }) => theme.colors.green};
