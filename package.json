@@ -24,7 +24,7 @@
   },
   "dependencies": {
     "@zeit/next-sass": "1.0.1",
-    "aws-sdk": "2.984.0",
+    "aws-sdk": "2.999.0",
     "chrome-aws-lambda": "10.1.0",
     "hashids": "2.2.8",
     "next": "11.1.2",
