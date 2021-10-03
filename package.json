@@ -61,7 +61,7 @@
     "@types/prettier": "2.3.2",
     "@types/puppeteer": "5.4.4",
     "@types/puppeteer-core": "5.4.0",
-    "@types/react": "17.0.20",
+    "@types/react": "17.0.26",
     "@types/react-dom": "17.0.9",
     "@types/react-redux": "7.1.18",
     "@types/styled-components": "5.1.14",
