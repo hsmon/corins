@@ -89,7 +89,7 @@
     "jest-styled-components": "7.0.5",
     "lint-staged": "11.2.3",
     "msw": "0.35.0",
-    "next-page-tester": "0.29.0",
+    "next-page-tester": "0.29.1",
     "prettier": "2.4.1",
     "prisma": "3.2.1",
     "puppeteer": "10.4.0",
