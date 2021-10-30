@@ -6071,10 +6071,10 @@ next-connect@0.11.0:
   dependencies:
     trouter "^3.1.0"
 
-next-page-tester@0.29.1:
-  version "0.29.1"
-  resolved "https://registry.yarnpkg.com/next-page-tester/-/next-page-tester-0.29.1.tgz#2e75bd5981a0d1bda09e5d24ca2356273ace7520"
-  integrity sha512-HQkkg7ySXTKzOsd2i+lsjJouuyR7cMjJ5MI1Fc6+kCvOMeWV6VWy/JGcz0IYhMag961F4cdtFALCwwb08nVOXw==
+next-page-tester@0.30.0:
+  version "0.30.0"
+  resolved "https://registry.yarnpkg.com/next-page-tester/-/next-page-tester-0.30.0.tgz#6dea40c91f2e93dcfbbd64d8f53b0fa3cadaf06c"
+  integrity sha512-dUEGusrwMjl77XII2GQF0ULMlBjCksXH4/GFejLRPIbpr/qChU/hTN+flQRdryYPRFW44ATVsgQet4HMlPdauw==
   dependencies:
     "@types/express" "^4.17.13"
     cookie "^0.4.1"
