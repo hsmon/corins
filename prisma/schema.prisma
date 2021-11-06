@@ -5,12 +5,11 @@ datasource db {
   provider          = "mysql"
   url               = env("DATABASE_URL")
   shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
-  planetScaleMode   = true
 }
 
 generator client {
   provider        = "prisma-client-js"
-  previewFeatures = ["planetScaleMode"]
+  previewFeatures = ["referentialIntegrity"]
 }
 
 model pin {
@@ -19,11 +18,11 @@ model pin {
 }
 
 model url {
-  id  Int    @id @default(autoincrement())
-  image_width Int? @db.UnsignedInt @default(0)
-  image_height Int? @db.UnsignedInt @default(0)
-  pin_id  Int
-  unique_id String @db.VarChar(32)
-  created_at DateTime @default(now())
-  updated_at DateTime @default(now())
+  id           Int      @id @default(autoincrement())
+  image_width  Int?     @default(0) @db.UnsignedInt
+  image_height Int?     @default(0) @db.UnsignedInt
+  pin_id       Int
+  unique_id    String   @db.VarChar(32)
+  created_at   DateTime @default(now())
+  updated_at   DateTime @default(now())
 }
