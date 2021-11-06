@@ -92,7 +92,7 @@
     "next-page-tester": "0.30.0",
     "prettier": "2.4.1",
     "prisma": "3.3.0",
-    "puppeteer": "10.4.0",
+    "puppeteer": "11.0.0",
     "typescript": "4.4.4"
   },
   "jest": {
