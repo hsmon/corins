@@ -58,7 +58,7 @@
     "@types/jest": "27.0.2",
     "@types/node": "16.11.6",
     "@types/node-sass": "4.11.2",
-    "@types/prettier": "2.4.1",
+    "@types/prettier": "2.4.2",
     "@types/puppeteer": "5.4.4",
     "@types/puppeteer-core": "5.4.0",
     "@types/react": "17.0.33",
